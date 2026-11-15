@@ -1,0 +1,87 @@
+name: routecorevika
+
+x-osrm: &osrm-image ghcr.io/project-osrm/osrm-backend:v5.27.1
+
+services:
+  osm-download:
+    image: python:3.11-slim
+    volumes:
+      - road_data:/roads
+    command:
+      - python
+      - -c
+      - |
+        from pathlib import Path
+        from shutil import copyfileobj
+        from urllib.request import urlopen
+
+        target = Path("/roads/ural.osm.pbf")
+        if not target.exists():
+            temporary = target.with_suffix(".part")
+            url = "https://download.geofabrik.de/russia/ural-fed-district-latest.osm.pbf"
+            with urlopen(url, timeout=120) as response, temporary.open("wb") as output:
+                copyfileobj(response, output)
+            temporary.replace(target)
+
+  osrm-prepare:
+    image: *osrm-image
+    depends_on:
+      osm-download:
+        condition: service_completed_successfully
+    volumes:
+      - road_data:/roads
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - |
+        if [ ! -f /roads/ural-v5.27.1-ch-ready ]; then
+          osrm-extract -p /opt/car.lua /roads/ural.osm.pbf
+          osrm-contract /roads/ural.osrm
+          touch /roads/ural-v5.27.1-ch-ready
+        fi
+
+  osrm:
+    image: *osrm-image
+    depends_on:
+      osrm-prepare:
+        condition: service_completed_successfully
+    volumes:
+      - road_data:/roads:ro
+    command: ["osrm-routed", "--algorithm", "ch", "--max-table-size", "100", "/roads/ural.osrm"]
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/5000"]
+      interval: 5s
+      timeout: 3s
+      retries: 24
+    restart: unless-stopped
+
+  backend:
+    image: routecore-backend:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "8085:8085"
+    volumes:
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      - ./data:/app/data
+      - app_state:/state
+    environment:
+      PORT: "8085"
+      OSRM_URL: http://osrm:5000
+      ROUTECORE_STATE_DIR: /state
+    depends_on:
+      osrm:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8085/api/v1/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+volumes:
+  app_state:
+    name: routecorevika_app_state
+  road_data:
+    name: ${ROUTECORE_ROAD_VOLUME:-routecore_road_data}

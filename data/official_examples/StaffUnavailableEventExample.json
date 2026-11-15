@@ -1,0 +1,8 @@
+{
+  "event_id": "EV-20261026-0016",
+  "type": "STAFF_UNAVAILABLE",
+  "timestamp": "2026-10-26T11:10:00+05:00",
+  "staff_id": "ST-014",
+  "until": null,
+  "reason": "VEHICLE_BREAKDOWN"
+}

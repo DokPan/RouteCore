@@ -1,0 +1,1064 @@
+[
+  {
+    "id": "ORD_PGP_01",
+    "order_type": "troubleshoot_user",
+    "technology": "FTTB",
+    "address": "ул. Ленина, д. 14",
+    "lat": 56.791259,
+    "lon": 60.565696,
+    "registration_time": "2026-11-13T09:13:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_004",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_PGP_02",
+    "order_type": "troubleshoot_user",
+    "technology": "FTTB",
+    "address": "ул. Ленина, д. 15",
+    "lat": 56.792495,
+    "lon": 60.566662,
+    "registration_time": "2026-11-13T09:16:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_004",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_PGP_03",
+    "order_type": "troubleshoot_user",
+    "technology": "FTTB",
+    "address": "ул. Ленина, д. 16",
+    "lat": 56.791813,
+    "lon": 60.566054,
+    "registration_time": "2026-11-13T09:19:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_004",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_PGP_04",
+    "order_type": "troubleshoot_user",
+    "technology": "FTTB",
+    "address": "ул. Ленина, д. 17",
+    "lat": 56.792519,
+    "lon": 60.56616,
+    "registration_time": "2026-11-13T09:22:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_004",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_001",
+    "order_type": "add_service",
+    "technology": "PON",
+    "address": "ул. Белинского, д. 59",
+    "lat": 56.802476,
+    "lon": 60.680255,
+    "registration_time": "2026-11-13T08:04:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_009",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_002",
+    "order_type": "dismantle_ao",
+    "technology": "PON",
+    "address": "ул. Бажова, д. 28",
+    "lat": 56.783428,
+    "lon": 60.56398,
+    "registration_time": "2026-11-13T08:22:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_001",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_003",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Космонавтов, д. 57",
+    "lat": 56.801314,
+    "lon": 60.61049,
+    "registration_time": "2026-11-13T08:39:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_003",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_004",
+    "order_type": "survey_private",
+    "technology": "xDSL",
+    "address": "ул. Малышева, д. 113",
+    "lat": 56.790271,
+    "lon": 60.584354,
+    "registration_time": "2026-11-13T08:06:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_021",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_005",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Мира, д. 27",
+    "lat": 56.838679,
+    "lon": 60.524346,
+    "registration_time": "2026-11-13T08:40:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_024",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_006",
+    "order_type": "dismantle_ao",
+    "technology": "xDSL",
+    "address": "ул. Малышева, д. 82",
+    "lat": 56.805698,
+    "lon": 60.665999,
+    "registration_time": "2026-11-13T08:00:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_009",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_007",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Шевченко, д. 71",
+    "lat": 56.864654,
+    "lon": 60.683253,
+    "registration_time": "2026-11-13T08:07:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_011",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_008",
+    "order_type": "troubleshoot_user",
+    "technology": "PON",
+    "address": "ул. Мира, д. 71",
+    "lat": 56.780745,
+    "lon": 60.593207,
+    "registration_time": "2026-11-13T08:19:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": true,
+    "access_node_id": "AN_003",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_009",
+    "order_type": "inst_mdf_pon",
+    "technology": "PON",
+    "address": "ул. 8 Марта, д. 86",
+    "lat": 56.837794,
+    "lon": 60.723026,
+    "registration_time": "2026-11-13T08:56:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_012",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_010",
+    "order_type": "troubleshoot_user",
+    "technology": "FTTB",
+    "address": "ул. Космонавтов, д. 113",
+    "lat": 56.892478,
+    "lon": 60.582708,
+    "registration_time": "2026-11-13T08:59:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_014",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_011",
+    "order_type": "add_service",
+    "technology": "PON",
+    "address": "ул. Космонавтов, д. 101",
+    "lat": 56.864522,
+    "lon": 60.677902,
+    "registration_time": "2026-11-13T08:02:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_011",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_012",
+    "order_type": "troubleshoot_user",
+    "technology": "FTTB",
+    "address": "ул. Крауля, д. 40",
+    "lat": 56.890115,
+    "lon": 60.728184,
+    "registration_time": "2026-11-13T08:14:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_016",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_013",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Белинского, д. 111",
+    "lat": 56.770334,
+    "lon": 60.583206,
+    "registration_time": "2026-11-13T08:22:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_001",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_014",
+    "order_type": "dismantle_ao",
+    "technology": "xDSL",
+    "address": "ул. Малышева, д. 113",
+    "lat": 56.815354,
+    "lon": 60.586248,
+    "registration_time": "2026-11-13T08:16:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_021",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_015",
+    "order_type": "inst_mdf_pon",
+    "technology": "PON",
+    "address": "ул. Крауля, д. 56",
+    "lat": 56.801326,
+    "lon": 60.540842,
+    "registration_time": "2026-11-13T08:24:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_002",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_016",
+    "order_type": "troubleshoot_user",
+    "technology": "xDSL",
+    "address": "ул. Луначарского, д. 1",
+    "lat": 56.826783,
+    "lon": 60.66323,
+    "registration_time": "2026-11-13T08:43:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": true,
+    "access_node_id": "AN_019",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_017",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Малышева, д. 86",
+    "lat": 56.844774,
+    "lon": 60.536933,
+    "registration_time": "2026-11-13T08:42:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_024",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_018",
+    "order_type": "troubleshoot_degrade",
+    "technology": "FTTB",
+    "address": "ул. Луначарского, д. 42",
+    "lat": 56.789252,
+    "lon": 60.560402,
+    "registration_time": "2026-11-13T08:08:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_004",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_019",
+    "order_type": "add_service",
+    "technology": "FTTB",
+    "address": "ул. Космонавтов, д. 79",
+    "lat": 56.887299,
+    "lon": 60.518482,
+    "registration_time": "2026-11-13T08:53:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_007",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_020",
+    "order_type": "troubleshoot_degrade",
+    "technology": "FTTB",
+    "address": "ул. Луначарского, д. 101",
+    "lat": 56.785651,
+    "lon": 60.579647,
+    "registration_time": "2026-11-13T08:29:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_001",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_021",
+    "order_type": "add_service",
+    "technology": "PON",
+    "address": "ул. Шевченко, д. 102",
+    "lat": 56.883629,
+    "lon": 60.538046,
+    "registration_time": "2026-11-13T08:10:00",
+    "time_slot": "17:00-19:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_015",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_022",
+    "order_type": "survey_private",
+    "technology": "xDSL",
+    "address": "ул. Мира, д. 43",
+    "lat": 56.796352,
+    "lon": 60.598417,
+    "registration_time": "2026-11-13T08:15:00",
+    "time_slot": "17:00-19:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_022",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_023",
+    "order_type": "inst_private_vls",
+    "technology": "PON",
+    "address": "ул. Космонавтов, д. 4",
+    "lat": 56.794936,
+    "lon": 60.599375,
+    "registration_time": "2026-11-13T08:39:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_022",
+    "requires_height": true
+  },
+  {
+    "id": "ORD_024",
+    "order_type": "survey_private",
+    "technology": "xDSL",
+    "address": "ул. Мира, д. 25",
+    "lat": 56.900478,
+    "lon": 60.579455,
+    "registration_time": "2026-11-13T08:25:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": true,
+    "access_node_id": "AN_025",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_025",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Луначарского, д. 29",
+    "lat": 56.861035,
+    "lon": 60.601789,
+    "registration_time": "2026-11-13T08:33:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_008",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_026",
+    "order_type": "survey_private",
+    "technology": "PON",
+    "address": "ул. Шевченко, д. 18",
+    "lat": 56.880636,
+    "lon": 60.534192,
+    "registration_time": "2026-11-13T08:35:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_015",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_027",
+    "order_type": "inst_private_vls",
+    "technology": "PON",
+    "address": "ул. Бажова, д. 55",
+    "lat": 56.869104,
+    "lon": 60.555664,
+    "registration_time": "2026-11-13T08:57:00",
+    "time_slot": "17:00-19:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_020",
+    "requires_height": true
+  },
+  {
+    "id": "ORD_028",
+    "order_type": "dismantle_ao",
+    "technology": "DOCSIS",
+    "address": "ул. 8 Марта, д. 108",
+    "lat": 56.838668,
+    "lon": 60.617816,
+    "registration_time": "2026-11-13T08:33:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_006",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_029",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Малышева, д. 92",
+    "lat": 56.874071,
+    "lon": 60.710195,
+    "registration_time": "2026-11-13T08:20:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_016",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_030",
+    "order_type": "survey_private",
+    "technology": "PON",
+    "address": "ул. 8 Марта, д. 50",
+    "lat": 56.868457,
+    "lon": 60.599159,
+    "registration_time": "2026-11-13T08:04:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_018",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_031",
+    "order_type": "add_service",
+    "technology": "FTTB",
+    "address": "ул. Шевченко, д. 54",
+    "lat": 56.881977,
+    "lon": 60.602314,
+    "registration_time": "2026-11-13T08:24:00",
+    "time_slot": "17:00-19:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_014",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_032",
+    "order_type": "survey_private",
+    "technology": "xDSL",
+    "address": "ул. Ленина, д. 46",
+    "lat": 56.887886,
+    "lon": 60.579636,
+    "registration_time": "2026-11-13T08:57:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": true,
+    "access_node_id": "AN_025",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_033",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Белинского, д. 56",
+    "lat": 56.894678,
+    "lon": 60.588993,
+    "registration_time": "2026-11-13T08:42:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_014",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_034",
+    "order_type": "dismantle_ao",
+    "technology": "FTTB",
+    "address": "ул. Космонавтов, д. 80",
+    "lat": 56.809574,
+    "lon": 60.597065,
+    "registration_time": "2026-11-13T08:37:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_022",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_035",
+    "order_type": "inst_mdf_pon",
+    "technology": "PON",
+    "address": "ул. Луначарского, д. 18",
+    "lat": 56.837191,
+    "lon": 60.644487,
+    "registration_time": "2026-11-13T08:16:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_019",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_036",
+    "order_type": "troubleshoot_degrade",
+    "technology": "PON",
+    "address": "ул. Крауля, д. 44",
+    "lat": 56.798081,
+    "lon": 60.57501,
+    "registration_time": "2026-11-13T08:48:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_013",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_037",
+    "order_type": "inst_private_vls",
+    "technology": "PON",
+    "address": "ул. Ленина, д. 96",
+    "lat": 56.896292,
+    "lon": 60.607324,
+    "registration_time": "2026-11-13T08:22:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_014",
+    "requires_height": true
+  },
+  {
+    "id": "ORD_038",
+    "order_type": "survey_private",
+    "technology": "PON",
+    "address": "ул. 8 Марта, д. 26",
+    "lat": 56.880935,
+    "lon": 60.59169,
+    "registration_time": "2026-11-13T08:15:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_008",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_039",
+    "order_type": "add_service",
+    "technology": "PON",
+    "address": "ул. 8 Марта, д. 60",
+    "lat": 56.789434,
+    "lon": 60.567775,
+    "registration_time": "2026-11-13T08:10:00",
+    "time_slot": "17:00-19:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_005",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_040",
+    "order_type": "survey_private",
+    "technology": "PON",
+    "address": "ул. Малышева, д. 75",
+    "lat": 56.844957,
+    "lon": 60.548587,
+    "registration_time": "2026-11-13T08:43:00",
+    "time_slot": "13:00-15:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": true,
+    "access_node_id": "AN_020",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_041",
+    "order_type": "add_service",
+    "technology": "PON",
+    "address": "ул. Мира, д. 89",
+    "lat": 56.800161,
+    "lon": 60.570921,
+    "registration_time": "2026-11-13T08:44:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_013",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_042",
+    "order_type": "troubleshoot_degrade",
+    "technology": "PON",
+    "address": "ул. Ленина, д. 45",
+    "lat": 56.89491,
+    "lon": 60.587782,
+    "registration_time": "2026-11-13T08:04:00",
+    "time_slot": "17:00-19:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_025",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_043",
+    "order_type": "inst_private_vls",
+    "technology": "PON",
+    "address": "ул. Шевченко, д. 14",
+    "lat": 56.890649,
+    "lon": 60.591891,
+    "registration_time": "2026-11-13T08:57:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_017",
+    "requires_height": true
+  },
+  {
+    "id": "ORD_044",
+    "order_type": "troubleshoot_user",
+    "technology": "DOCSIS",
+    "address": "ул. Бажова, д. 84",
+    "lat": 56.864696,
+    "lon": 60.538411,
+    "registration_time": "2026-11-13T08:34:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_015",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_045",
+    "order_type": "add_service",
+    "technology": "FTTB",
+    "address": "ул. Мира, д. 35",
+    "lat": 56.888597,
+    "lon": 60.575301,
+    "registration_time": "2026-11-13T08:59:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_025",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_046",
+    "order_type": "troubleshoot_degrade",
+    "technology": "FTTB",
+    "address": "ул. Шевченко, д. 73",
+    "lat": 56.794612,
+    "lon": 60.600754,
+    "registration_time": "2026-11-13T08:01:00",
+    "time_slot": "11:00-13:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_003",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_047",
+    "order_type": "inst_private_vls",
+    "technology": "PON",
+    "address": "ул. 8 Марта, д. 46",
+    "lat": 56.889434,
+    "lon": 60.712254,
+    "registration_time": "2026-11-13T08:56:00",
+    "time_slot": "15:00-17:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_016",
+    "requires_height": true
+  },
+  {
+    "id": "ORD_048",
+    "order_type": "troubleshoot_degrade",
+    "technology": "PON",
+    "address": "ул. 8 Марта, д. 11",
+    "lat": 56.851428,
+    "lon": 60.551421,
+    "registration_time": "2026-11-13T08:35:00",
+    "time_slot": "17:00-19:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": true,
+    "access_node_id": "AN_020",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_049",
+    "order_type": "inst_mdf_fttb",
+    "technology": "FTTB",
+    "address": "ул. Шевченко, д. 58",
+    "lat": 56.902716,
+    "lon": 60.570728,
+    "registration_time": "2026-11-13T08:14:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_025",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_050",
+    "order_type": "troubleshoot_user",
+    "technology": "xDSL",
+    "address": "ул. Мира, д. 48",
+    "lat": 56.789442,
+    "lon": 60.579564,
+    "registration_time": "2026-11-13T08:27:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_013",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_051",
+    "order_type": "inst_private_vls",
+    "technology": "PON",
+    "address": "ул. Шевченко, д. 35",
+    "lat": 56.82635,
+    "lon": 60.525154,
+    "registration_time": "2026-11-13T08:46:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_024",
+    "requires_height": true
+  },
+  {
+    "id": "ORD_052",
+    "order_type": "troubleshoot_degrade",
+    "technology": "PON",
+    "address": "ул. Бажова, д. 98",
+    "lat": 56.890931,
+    "lon": 60.512046,
+    "registration_time": "2026-11-13T08:47:00",
+    "time_slot": "19:00-21:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 0,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_007",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_053",
+    "order_type": "inst_private_vls",
+    "technology": "PON",
+    "address": "ул. 8 Марта, д. 38",
+    "lat": 56.872323,
+    "lon": 60.707427,
+    "registration_time": "2026-11-13T08:00:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 1,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_016",
+    "requires_height": true
+  },
+  {
+    "id": "ORD_054",
+    "order_type": "troubleshoot_user",
+    "technology": "xDSL",
+    "address": "ул. Ленина, д. 71",
+    "lat": 56.80354,
+    "lon": 60.539743,
+    "registration_time": "2026-11-13T08:40:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 0
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_023",
+    "requires_height": false
+  },
+  {
+    "id": "ORD_055",
+    "order_type": "add_service",
+    "technology": "PON",
+    "address": "ул. Мира, д. 37",
+    "lat": 56.89301,
+    "lon": 60.58115,
+    "registration_time": "2026-11-13T08:11:00",
+    "time_slot": "09:00-11:00",
+    "required_equipment": {
+      "ONT": 0,
+      "router": 1,
+      "tv_box": 1
+    },
+    "is_repeat": false,
+    "access_node_id": "AN_025",
+    "requires_height": false
+  }
+]

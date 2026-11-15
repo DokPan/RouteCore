@@ -1,0 +1,95 @@
+.mobile-visits {
+  width: min(100% - 32px, 560px);
+  margin: 24px auto;
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  font-size: 15px;
+}
+
+.mobile-visits h1 { font-size: clamp(24px, 5vw, 32px); }
+.mobile-visits a.btn { text-decoration: none; }
+.mobile-visits .btn { min-height: 44px; }
+.mobile-visits .mobile-current-action {
+  min-height: 48px;
+  position: static;
+  width: 100%;
+  transform: none;
+}
+
+#mobile-profile:not([hidden]) { background: #fff; border: 1px solid #ded6ea; border-radius: 14px; padding: 16px; }
+#mobile-profile dl { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; }
+#mobile-profile dd { margin: 0; font-weight: 600; }
+#mobile-login-status:empty { display: none; }
+
+.mobile-account-actions #mobile-logout { width: auto; }
+
+#mobile-login:not([hidden]) {
+  display: grid;
+  gap: 8px;
+}
+
+#mobile-login input {
+  width: 100%;
+  min-height: 44px;
+  font: inherit;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.mobile-visits > a.btn:not([hidden]) {
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  margin-block: 10px;
+}
+#mobile-login:not([hidden]) {
+  background: #fff;
+  padding: clamp(16px, 4vw, 28px);
+  border: 1px solid #ded6ea;
+  border-radius: 16px;
+}
+#mobile-list summary { list-style: none; }
+#mobile-list summary::-webkit-details-marker { display: none; }
+#mobile-list summary { display: inline-flex; padding: 8px 12px; border: 1px solid #ded6ea; border-radius: 8px; cursor: pointer; }
+#mobile-list details[open] summary { background: #f3eef9; margin-bottom: 6px; }
+#action-confirmation { margin: auto; max-width: min(440px, calc(100vw - 32px)); }
+#action-confirmation::backdrop { background: #10182866; }
+
+.mobile-notice {
+  top: max(12px, env(safe-area-inset-top));
+  right: 12px;
+  bottom: auto;
+  left: auto;
+  max-width: min(400px, calc(100vw - 24px));
+  width: max-content;
+  background: #fff;
+  color: var(--ink-main);
+  border: 1px solid var(--brand-border);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.875rem;
+}
+
+.mobile-notice[hidden] {
+  display: none;
+}
+
+#mobile-demo-option:not([hidden]) {
+  margin-block: 12px;
+}
+
+#mobile-settings-title {
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#mobile-settings-title::-webkit-details-marker {
+  display: none;
+}
+
+#mobile-demo-option label {
+  display: block;
+  margin-top: 8px;
+}

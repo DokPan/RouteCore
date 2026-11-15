@@ -1,0 +1,9 @@
+{
+  "event_id": "EV-20261026-0027",
+  "type": "ORDER_TRANSFERRED",
+  "timestamp": "2026-10-26T13:25:00+05:00",
+  "staff_id": "ST-007",
+  "order_id": "ORD-20261026-0123",
+  "actual_end": "2026-10-26T13:25:00+05:00",
+  "transferred_to": "STATION_EQUIPMENT"
+}

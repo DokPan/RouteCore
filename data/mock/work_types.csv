@@ -1,0 +1,9 @@
+id,name,profile,norm_min,sla,technologies,requires_height,eq_ont,eq_router,eq_tv_box
+inst_mdf_pon,"Инсталляция ШПД/IPTV, МКД, PON",installation,90,Визит в слот; подключение <= 3 раб. дней с заявки,PON,false,1,1,1
+inst_mdf_fttb,"Инсталляция ШПД/IPTV, МКД, FTTB",installation,60,Визит в слот; подключение <= 3 раб. дней с заявки,FTTB,false,0,1,1
+inst_private_vls,"Инсталляция, частный сектор, с ВЛС",installation,180,Визит в слот; подключение <= 5 раб. дней с заявки,PON,true,1,1,0
+add_service,"Доподключение услуги (IPTV, Wi-Fi-роутер)",installation,40,Визит в слот,PON;FTTB,false,0,1,1
+survey_private,Обследование (частный сектор),both,45,<= 2 раб. дней,PON;xDSL,false,0,0,0
+troubleshoot_user,Устранение неисправности (обращение абонента),3ltp,60,<= 24 ч с регистрации; повторное <= 12 ч,PON;FTTB;xDSL;DOCSIS,false,0,1,0
+troubleshoot_degrade,"Устранение деградации, выявленной системой мониторинга качества",3ltp,45,<= 48 ч с регистрации,PON;FTTB,false,0,0,0
+dismantle_ao,Демонтаж АО,3ltp,30,<= 5 раб. дней,PON;FTTB;xDSL;DOCSIS,false,0,0,0

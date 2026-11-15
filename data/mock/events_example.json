@@ -1,0 +1,52 @@
+[
+  {
+    "id": "EVT_001",
+    "event_type": "cancel_visit",
+    "timestamp": "2026-11-13T10:15:00",
+    "order_id": "ORD_003",
+    "reason": "Абонент не подтвердил визит при звонке за 45 минут",
+    "parameters": {}
+  },
+  {
+    "id": "EVT_002",
+    "event_type": "tech_delay",
+    "timestamp": "2026-11-13T10:30:00",
+    "staff_id": "EMP_001",
+    "delay_minutes": 35,
+    "reason": "Задержка на объекте: сложный монтаж кабельного ввода",
+    "parameters": {
+      "extra_minutes": 35
+    }
+  },
+  {
+    "id": "EVT_003",
+    "event_type": "new_order",
+    "timestamp": "2026-11-13T11:00:00",
+    "order": {
+      "id": "ORD_URGENT_999",
+      "order_type": "troubleshoot_user",
+      "technology": "PON",
+      "address": "ул. Малышева, д. 51",
+      "lat": 56.835,
+      "lon": 60.612,
+      "registration_time": "2026-11-13T10:55:00",
+      "time_slot": "13:00-15:00",
+      "required_equipment": {
+        "ONT": 0,
+        "router": 1,
+        "tv_box": 0
+      },
+      "is_repeat": true,
+      "access_node_id": "AN_001",
+      "requires_height": false
+    }
+  },
+  {
+    "id": "EVT_004",
+    "event_type": "tech_unavailable",
+    "timestamp": "2026-11-13T12:30:00",
+    "staff_id": "EMP_005",
+    "reason": "Поломка служебного автомобиля на перекрестке",
+    "parameters": {}
+  }
+]

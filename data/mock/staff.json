@@ -1,0 +1,848 @@
+[
+  {
+    "id": "EMP_001",
+    "name": "Морозов Роман",
+    "profile": "installation",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 5,
+      "router": 4,
+      "tv_box": 3
+    }
+  },
+  {
+    "id": "EMP_002",
+    "name": "Попов Павел",
+    "profile": "installation",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 3,
+      "router": 4,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_003",
+    "name": "Волков Михаил",
+    "profile": "installation",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 5,
+      "router": 5,
+      "tv_box": 3
+    }
+  },
+  {
+    "id": "EMP_004",
+    "name": "Петров Сергей",
+    "profile": "installation",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 4,
+      "router": 5,
+      "tv_box": 3
+    }
+  },
+  {
+    "id": "EMP_005",
+    "name": "Смирнов Александр",
+    "profile": "installation",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 3,
+      "router": 5,
+      "tv_box": 3
+    }
+  },
+  {
+    "id": "EMP_006",
+    "name": "Кузнецов Денис",
+    "profile": "installation",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 3,
+      "router": 3,
+      "tv_box": 4
+    }
+  },
+  {
+    "id": "EMP_007",
+    "name": "Соколов Иван",
+    "profile": "installation",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 4,
+      "router": 5,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_008",
+    "name": "Васильев Евгений",
+    "profile": "installation",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 5,
+      "router": 4,
+      "tv_box": 4
+    }
+  },
+  {
+    "id": "EMP_009",
+    "name": "Смирнов Денис",
+    "profile": "installation",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 3,
+      "router": 5,
+      "tv_box": 4
+    }
+  },
+  {
+    "id": "EMP_010",
+    "name": "Петров Дмитрий",
+    "profile": "installation",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 5,
+      "router": 4,
+      "tv_box": 4
+    }
+  },
+  {
+    "id": "EMP_011",
+    "name": "Михайлов Александр",
+    "profile": "installation",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 4,
+      "router": 4,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_012",
+    "name": "Новиков Максим",
+    "profile": "installation",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 5,
+      "router": 5,
+      "tv_box": 3
+    }
+  },
+  {
+    "id": "EMP_013",
+    "name": "Кузнецов Алексей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 3,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_014",
+    "name": "Михайлов Александр",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_015",
+    "name": "Попов Александр",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 3,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_016",
+    "name": "Волков Роман",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_017",
+    "name": "Морозов Роман",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_018",
+    "name": "Попов Евгений",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 3,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_019",
+    "name": "Морозов Денис",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 3,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_020",
+    "name": "Смирнов Сергей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 3,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_021",
+    "name": "Иванов Михаил",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_022",
+    "name": "Смирнов Павел",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_023",
+    "name": "Иванов Алексей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_024",
+    "name": "Морозов Роман",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_025",
+    "name": "Попов Роман",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_026",
+    "name": "Смирнов Денис",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_027",
+    "name": "Соколов Роман",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 3,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_028",
+    "name": "Соколов Павел",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_029",
+    "name": "Попов Сергей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_030",
+    "name": "Кузнецов Андрей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_031",
+    "name": "Михайлов Евгений",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_032",
+    "name": "Смирнов Сергей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_033",
+    "name": "Михайлов Сергей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 3,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_034",
+    "name": "Соколов Александр",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_035",
+    "name": "Васильев Иван",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 3,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_036",
+    "name": "Васильев Сергей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_1",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_037",
+    "name": "Иванов Александр",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_2",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 2
+    }
+  },
+  {
+    "id": "EMP_038",
+    "name": "Новиков Дмитрий",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_3",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_039",
+    "name": "Морозов Сергей",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_4",
+    "shift_start": "09:00",
+    "shift_end": "18:00",
+    "lunch_start": "13:00",
+    "lunch_end": "14:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL"
+    ],
+    "has_height_permit": false,
+    "equipment_stock": {
+      "ONT": 1,
+      "router": 2,
+      "tv_box": 1
+    }
+  },
+  {
+    "id": "EMP_040",
+    "name": "Федоров Михаил",
+    "profile": "3ltp",
+    "assigned_sc_id": "SC_5",
+    "shift_start": "12:00",
+    "shift_end": "21:00",
+    "lunch_start": "16:00",
+    "lunch_end": "17:00",
+    "technologies": [
+      "PON",
+      "FTTB",
+      "xDSL",
+      "DOCSIS"
+    ],
+    "has_height_permit": true,
+    "equipment_stock": {
+      "ONT": 2,
+      "router": 2,
+      "tv_box": 1
+    }
+  }
+]

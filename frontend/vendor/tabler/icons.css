@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Tabler Icons";
+  src: url("./tabler-icons.woff2") format("woff2");
+  font-display: block;
+}
+
+.ti {
+  font-family: "Tabler Icons";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+}
+
+.ti-search::before { content: "\eb1c"; }
+.ti-menu-2::before { content: "\ec42"; }
+.ti-alert-triangle::before { content: "\ea06"; }
+.ti-dots::before { content: "\ea95"; }

@@ -1,0 +1,31 @@
+{
+  "event_id": "EV-20261026-0012",
+  "type": "NEW_ORDER",
+  "timestamp": "2026-10-26T10:05:00+05:00",
+  "order": {
+    "order_id": "ORD-20261026-0417",
+    "work_type_code": "REPAIR",
+    "technology": "FTTB",
+    "building_id": "B-00877",
+    "address": "г. Екатеринбург, ул. Кировградская, 44",
+    "lat": 56.9052,
+    "lon": 60.5874,
+    "building_type": "MKD",
+    "requires_height": false,
+    "access_node_id": "AN-0102",
+    "registered_at": "2026-10-26T10:05:00+05:00",
+    "slot": {
+      "start": "2026-10-26T13:00:00+05:00",
+      "end": "2026-10-26T15:00:00+05:00"
+    },
+    "latest_start": "2026-10-26T15:00:00+05:00",
+    "deadline": "2026-10-26T22:05:00+05:00",
+    "required_equipment": {
+      "ONT": 0,
+      "ROUTER": 1,
+      "STB": 0
+    },
+    "is_repeat": true,
+    "previous_order_id": "ORD-20261021-0233"
+  }
+}

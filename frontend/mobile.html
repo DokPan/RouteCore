@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RouteCore · Мои визиты</title>
+  <link rel="stylesheet" href="/styles/style.css">
+  <link rel="stylesheet" href="/styles/account.css">
+</head>
+<body>
+  <dialog id="action-confirmation" class="modal-card dispatch-dialog">
+    <p></p>
+    <form method="dialog" class="form-actions">
+      <button class="btn btn-outline" value="no" autofocus></button>
+      <button class="btn btn-primary" value="yes"></button>
+    </form>
+  </dialog>
+  <div id="app-notice" class="app-notice mobile-notice" role="status" hidden></div>
+  <main class="mobile-visits">
+    <h1>Мои визиты</h1>
+    <nav class="mobile-account-actions" aria-label="Роли и профиль">
+      <a class="btn btn-outline" href="/roles.html">Выбрать роль</a>
+      <a class="btn btn-outline" href="/">Назад в диспетчерскую</a>
+      <button id="mobile-logout" type="button" class="btn btn-outline" hidden>Выйти из профиля</button>
+    </nav>
+    <form id="mobile-login">
+      <label for="mobile-staff">ID мастера</label>
+      <input id="mobile-staff" autocomplete="username" required>
+      <label for="mobile-pin">Демо-PIN</label>
+      <input id="mobile-pin" type="password" inputmode="numeric" required>
+      <button id="fill-demo-login" type="button" class="btn btn-outline">Заполнить демо-данные</button>
+      <button class="btn btn-primary">Войти</button>
+      <p id="mobile-login-status" role="alert"></p>
+    </form>
+    <section id="mobile-profile" hidden></section>
+    <details id="mobile-demo-option" hidden>
+      <summary id="mobile-settings-title"></summary>
+      <label><input id="mobile-demo-mode" type="checkbox"> <span id="mobile-demo-label"></span></label>
+    </details>
+    <p id="mobile-status" role="status"></p>
+    <a id="mobile-route-link" class="btn btn-outline" hidden></a>
+    <a id="mobile-sheet-link" class="btn btn-outline" hidden></a>
+    <button id="mobile-restock" class="btn btn-outline" type="button" hidden></button>
+    <div id="mobile-list"></div>
+  </main>
+  <script type="module" src="/js/mobile-visits.js"></script>
+</body>
+</html>

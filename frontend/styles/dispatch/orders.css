@@ -1,0 +1,193 @@
+.order-panel {
+  grid-column: 3;
+  grid-row: 1;
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.order-filter-chips {
+  display: flex;
+  gap: 4px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  background-color: #fafbfc;
+  flex-wrap: wrap;
+}
+
+.order-chip-btn {
+  padding: 4px 10px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-body);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.order-chip-btn:hover {
+  background-color: var(--brand-light);
+  border-color: var(--brand-border);
+  color: var(--brand);
+}
+
+.order-chip-btn.active {
+  background-color: var(--brand-light);
+  border-color: var(--brand-border);
+  color: var(--brand);
+}
+
+.order-cards-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--line);
+  border-left: 3px solid transparent;
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.order-card:hover,
+.order-card:focus-within {
+  border-color: var(--brand-border);
+  border-left-color: var(--brand);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--bg-hover);
+}
+
+.order-card strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-header);
+  display: block;
+}
+
+.order-card p {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  line-height: 1.35;
+}
+
+.order-card p:first-of-type {
+  font-weight: 600;
+  color: var(--ink-body);
+}
+
+.order-manage {
+  margin-top: 6px;
+  align-self: flex-start;
+  height: 26px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--r-sm);
+}
+.order-extra-filter { display: grid; gap: 4px; padding: 8px 12px; font-size: 12px; }
+.order-panel.is-collapsed .order-extra-filter { display: none; }
+.order-height-filter { display: flex; align-items: center; gap: 8px; padding: 6px 12px; font-size: 12px; }
+.order-panel.is-collapsed .order-height-filter { display: none; }
+.order-extra-filter input { min-height: 32px; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 0 10px; }
+.order-card-title { align-self: flex-start; border: 0; background: transparent; padding: 2px 0; font: inherit; font-weight: 700; color: var(--brand-hover); cursor: pointer; text-align: left; }
+.order-card-title:hover { text-decoration: underline; }
+
+.order-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.order-quick-btn {
+  flex: 1 1 auto;
+  height: 28px;
+  padding: 0 9px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.order-quick-btn.is-delay:hover {
+  background-color: var(--status-warn-bg);
+  border-color: var(--status-warn);
+  color: var(--status-warn-text);
+}
+
+.order-quick-btn.is-cancel:hover {
+  background-color: var(--status-bad-bg);
+  border-color: var(--status-bad);
+  color: var(--status-bad-text);
+}
+
+.candidate-option {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+  height: auto;
+  min-height: 44px;
+  padding: 8px 10px;
+  text-align: left;
+  white-space: normal;
+  margin-top: 6px;
+}
+
+.candidate-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-header);
+}
+
+.candidate-criteria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.candidate-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 600;
+  background-color: var(--bg-subtle);
+  color: var(--ink-body);
+}
+
+.candidate-badge.is-ok {
+  background-color: var(--status-ok-bg);
+  color: var(--status-ok-text);
+}
+
+.candidate-badge.is-warn {
+  background-color: var(--status-warn-bg);
+  color: var(--status-warn-text);
+}
+
+.scenario-summary-text {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  background-color: var(--brand-light);
+  border-left: 3px solid var(--brand);
+  color: var(--ink-main);
+  font-size: 12.5px;
+  line-height: 1.45;
+}

@@ -1,0 +1,14 @@
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DATA_DIR = BASE_DIR / "data"
+MOCK_DIR = DATA_DIR / "mock"
+
+
+DEFAULT_AVG_SPEED_KMH = 30.0
+DETOUR_FACTOR = 1.35
+PGP_WINDOW_MINUTES = 60
+PGP_THRESHOLD_ORDERS = 3
+MAX_SOLVE_TIME_SECONDS = 300
+MAX_EVENT_TIME_SECONDS = 10

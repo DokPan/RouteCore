@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>АРМ Диспетчера: Умная диспетчеризация выездных бригад | Ростелеком</title>
+  
+  <link rel="stylesheet" href="/vendor/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="/vendor/inter/index.css" />
+  <link rel="stylesheet" href="/vendor/tabler/icons.css" />
+  <link rel="stylesheet" href="/styles/style.css?v=4.5">
+</head>
+<body>
+  <div class="app-container">
+    
+    <header class="navbar">
+      <div class="nav-left">
+        <div class="brand">
+          <img src="/assets/onlylogo.jpg" alt="Ростелеком" class="brand-logo">
+          <div class="brand-text">
+            <span class="title">Умная диспетчеризация выездных бригад</span>
+            <span class="subtitle">ПАО «Ростелеком» | г. Екатеринбург</span>
+          </div>
+        </div>
+
+        
+        <div class="role-switcher">
+          <button type="button" class="role-btn active" id="btn-role-dispatcher" data-role="dispatcher" title="Рабочее место логиста-диспетчера: все бригады города, Гант, карта, ПГП">АРМ Диспетчера</button>
+          <button type="button" class="role-btn" id="btn-role-engineer" data-role="engineer" title="Мобильный интерфейс выездного инженера: личный маршрут, склад, карта OSRM">ЛК Инженера</button>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        
+        <div class="toolbar" id="dispatcher-toolbar">
+          <div class="btn-group-primary">
+            <button id="btn-replan" class="btn btn-primary" title="Построение оптимального плана смены в 1 клик">Спланировать смену</button>
+            <button id="btn-sim-day" class="btn btn-warning" title="Прогон активного дня: задержка мастера, поломка авто">Смоделировать день</button>
+          </div>
+          <div class="btn-group-secondary">
+            <span class="validation-badge" id="plan-validation-badge" role="button" tabindex="0" title="Проверка жёстких ограничений расписания H1–H10 (нажмите для подробностей)">Валидатор H1–H10: —</span>
+            <button id="btn-auto-pair-vls" class="btn btn-outline" title="Автоматически подобрать парные экипажи (2 мастера) для высотных нарядов ВЛС">Авто-пары ВЛС</button>
+            <button id="btn-open-scenario" class="btn btn-outline" title="Сценарный What-If анализ: -3 инженера, оптимизация рюкзака АО, дежурные бригады, история длительности">Сценарии (What-If)</button>
+            <button id="btn-open-traffic" class="btn btn-outline" title="Параметры загруженности дорог (TravelMatrix / ручной профиль)">Пробки / OSRM</button>
+            <button id="btn-open-add" class="btn btn-outline" title="Ручной ввод нового наряда">+ Наряд</button>
+            <button id="btn-open-upload" class="btn btn-outline" title="Загрузка внешнего файла DayInput.json">JSON</button>
+            <button id="btn-export-all-xlsx" class="btn btn-outline" title="Выгрузка сводного суточного расписания в Excel (.xlsx)">Сводный XLSX</button>
+            <button id="btn-export-all-csv" class="btn btn-outline" title="Выгрузка сводного суточного расписания в CSV">CSV</button>
+            <button id="btn-reset" class="btn btn-secondary" title="Сбросить данные к исходному набору">Сброс</button>
+          </div>
+        </div>
+
+        
+        <div class="toolbar" id="engineer-toolbar" style="display:none;">
+          <div class="engineer-toolbar-inner">
+            <div class="engineer-toolbar-row1">
+              <label for="engineer-lk-staff-select" class="engineer-lk-label">Инженер:</label>
+              <select id="engineer-lk-staff-select" class="form-control engineer-lk-select"></select>
+            </div>
+            <div class="engineer-toolbar-row2">
+              <button type="button" class="btn btn-primary" id="btn-lk-restock" title="Запланировать внеплановый заезд в СЦ за оборудованием (RESTOCK)">Заезд в СЦ за АО</button>
+              <button type="button" class="btn btn-outline" id="btn-lk-complete-restock" style="display:none; border-color:#10b981; color:#047857;" title="Отметить плановый заезд на склад СЦ как выполненный и обновить остатки">Завершить заезд СЦ</button>
+              <button type="button" class="btn btn-outline" id="btn-lk-download-xlsx">Скачать XLSX</button>
+              <button type="button" class="btn btn-outline" id="btn-lk-download-csv">Скачать CSV</button>
+              <button type="button" class="btn btn-outline" id="btn-lk-print-sheet">Печать / PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    
+    <nav class="view-nav-bar">
+      <div class="view-tabs">
+        <button class="view-tab-btn active" data-view="map">Карта маршрутов</button>
+        <button class="view-tab-btn" data-view="gantt">График смены (Гант)</button>
+        <button class="view-tab-btn" data-view="pgp">Групповые аварии ПГП (<span id="nav-pgp-count">15</span>)</button>
+        <button class="view-tab-btn" data-view="unassigned">Очередь переноса (<span id="nav-unassigned-count">160</span>)</button>
+        <button class="view-tab-btn" data-view="kpi">Ключевые показатели</button>
+        <button class="view-tab-btn" data-view="sheet">Маршрутные листы</button>
+        <button class="view-tab-btn" data-view="split">Оперативный мониторинг</button>
+      </div>
+    </nav>
+
+    
+    <main class="main-content">
+      
+      <section class="view-page active" id="view-map">
+        <div class="map-view-layout">
+          
+          <aside class="map-sidebar">
+            <div class="sidebar-mode-tabs">
+              <button type="button" class="sidebar-mode-btn active" data-sb-mode="filters">Фильтры и мастер</button>
+              <button type="button" class="sidebar-mode-btn" data-sb-mode="board">Доска нарядов (<span id="board-tab-count">0</span>)</button>
+            </div>
+
+            <div id="sidebar-filters-panel">
+            <div class="sidebar-box">
+              <span class="sidebar-box-title">Фильтры карты</span>
+              <div class="control-group">
+                <label for="filter-district">Район Екатеринбурга:</label>
+                <select id="filter-district">
+                  <option value="all">Все районы (5)</option>
+                  <option value="SC-01">Уралмаш / Эльмаш (Север)</option>
+                  <option value="SC-02">Центр (Ленинский / Кировский)</option>
+                  <option value="SC-03">ВИЗ / Заречный (Запад)</option>
+                  <option value="SC-04">Пионерский / ЖБИ (Восток)</option>
+                  <option value="SC-05">Ботаника / Чкаловский (Юг)</option>
+                </select>
+              </div>
+              <div class="control-group" style="margin-top:8px;">
+                <label for="filter-crew">Инженер бригады:</label>
+                <select id="filter-crew">
+                  <option value="all">Все инженеры (40)</option>
+                </select>
+              </div>
+            </div>
+
+            
+            <div class="sidebar-box engineer-card-box" id="sidebar-engineer-card">
+              <span class="sidebar-box-title">Выбранный специалист</span>
+              <div class="eng-card-name" id="sb-eng-name">Морозов Роман («Север»)</div>
+              <div class="eng-card-sub" id="sb-eng-meta">Инженер инсталляций PON/FTTB | ST-001</div>
+
+              <div class="eng-card-stats">
+                <div class="eng-stat-item">
+                  <span class="eng-stat-label">Смена:</span>
+                  <span class="eng-stat-val" id="sb-eng-shift">09:00 - 18:00</span>
+                </div>
+                <div class="eng-stat-item">
+                  <span class="eng-stat-label">Визитов:</span>
+                  <span class="eng-stat-val bold text-primary" id="sb-eng-visits">4 наряда</span>
+                </div>
+                <div class="eng-stat-item">
+                  <span class="eng-stat-label">Сервисный центр:</span>
+                  <span class="eng-stat-val" id="sb-eng-sc">СЦ «Север» (Уралмаш)</span>
+                </div>
+                <div class="eng-stat-item">
+                  <span class="eng-stat-label">Автомобиль:</span>
+                  <span class="eng-stat-val" id="sb-eng-car">Lada Largus (А101РТ 96)</span>
+                </div>
+                <div id="sb-eng-osrm-stat" style="margin-top:6px; font-size:11px;">
+                  <span class="badge" style="background:#f3e8ff; color:#7e22ce; font-weight:600;">Граф OSRM: расчет по улицам</span>
+                </div>
+              </div>
+
+              <div class="eng-card-actions">
+                <button type="button" class="btn btn-primary btn-sm" id="btn-sb-route-sheet" style="width:100%;">Открыть маршрутный лист</button>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-sb-to-gantt" style="width:100%; margin-top:6px;" title="Перейти к графику смены этого инженера">Показать график смены</button>
+                <button type="button" class="btn btn-warning btn-sm" id="btn-sb-incident" style="width:100%; margin-top:6px;" title="Смоделировать задержку из-за затора на мосту через Исеть (+25 мин)">Зафиксировать затор / ДТП (+25 мин)</button>
+              </div>
+            </div>
+
+            
+            <div class="map-hint-box">
+              Подсказка: клик по любой точке или наряду на карте открывает подробную карточку наряда справа.
+            </div>
+            </div>
+
+            <div id="sidebar-order-board-panel" style="display:none; flex-direction:column; gap:8px; height:100%; min-height:0;">
+              <div class="sidebar-box" style="margin-bottom:0; padding:10px;">
+                <input type="text" id="board-search" class="form-control" placeholder="Поиск по ID или адресу..." style="width:100%; font-size:12px; margin-bottom:6px;">
+                <div style="display:flex; gap:6px; align-items:center; margin-bottom:6px;">
+                  <select id="board-status-filter" class="form-control" style="flex:1; font-size:11.5px;">
+                    <option value="ALL">Все статусы</option>
+                    <option value="PLANNED">В плане</option>
+                    <option value="IN_PROGRESS">В работе</option>
+                    <option value="DONE">Выполнен</option>
+                    <option value="UNASSIGNED">К переносу</option>
+                    <option value="PGP">Групповая (ПГП)</option>
+                    <option value="CANCELLED">Отменён</option>
+                  </select>
+                </div>
+                <div class="board-cat-row" id="board-cat-row">
+                  <button type="button" class="board-cat-btn active" data-cat="ALL">Все</button>
+                  <button type="button" class="board-cat-btn" data-cat="INST">Инсталляция</button>
+                  <button type="button" class="board-cat-btn" data-cat="3LTP">3ЛТП</button>
+                  <button type="button" class="board-cat-btn" data-cat="RISK">Риск</button>
+                  <button type="button" class="board-cat-btn" data-cat="UNASSIGNED">К переносу</button>
+                </div>
+                <label style="display:flex; align-items:center; gap:6px; font-size:11px; color:#334155; margin-top:6px; cursor:pointer;">
+                  <input type="checkbox" id="board-height-only" style="accent-color:#7700ff;">
+                  <span>Только высотные работы (ВЛС)</span>
+                </label>
+                <div id="board-count-label" style="font-size:11px; color:#64748b; margin-top:4px;">Нарядов: 0</div>
+              </div>
+              <div id="dispatcher-order-board-list" class="order-board-list"></div>
+            </div>
+          </aside>
+
+          
+          <div class="map-container-wrap">
+            <div id="map"></div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="view-page" id="view-gantt">
+        <div class="page-container">
+          <div class="gantt-top-bar">
+            
+            <div class="gantt-controls-row">
+              <div class="gantt-search-col">
+                <label for="gantt-search" class="gantt-ctrl-label">Поиск мастера по имени</label>
+                <input type="text" id="gantt-search" placeholder="Поиск мастера по имени..." />
+              </div>
+
+              <div class="gantt-district-col">
+                <label for="gantt-district-select" class="gantt-ctrl-label">Сервисный центр</label>
+                <select id="gantt-district-select">
+                  <option value="all">Все сервисные центры</option>
+                  <option value="SC-01">СЦ «Север» (Уралмаш)</option>
+                  <option value="SC-02">СЦ «Центр»</option>
+                  <option value="SC-03">СЦ «Запад» (ВИЗ)</option>
+                  <option value="SC-04">СЦ «Восток» (ЖБИ)</option>
+                  <option value="SC-05">СЦ «Юг» (Ботаника)</option>
+                </select>
+              </div>
+
+              <div class="gantt-time-col">
+                <label for="gantt-shift-time" class="gantt-ctrl-label">Время смены: <strong id="gantt-shift-time-value" style="color:#7700ff;">10:30</strong></label>
+                <input type="range" id="gantt-shift-time" min="540" max="1260" step="5" value="630" style="width:155px; accent-color:#7700ff; cursor:pointer;">
+              </div>
+
+              
+              <div class="gantt-legend">
+                <span class="legend-item"><span class="badge badge-order-std"></span> Наряд</span>
+                <span class="legend-item"><span class="badge badge-order-install"></span> Инсталляция</span>
+                <span class="legend-item"><span class="badge badge-lunch"></span> Обед</span>
+                <span class="legend-item"><span class="badge badge-reload"></span> Дозаезд в СЦ</span>
+                <span class="legend-item"><span class="badge badge-risk"></span> Риск опоздания</span>
+              </div>
+
+              <div class="gantt-action-col" style="margin-left:auto;">
+                <button type="button" class="btn btn-outline btn-sm" id="btn-gantt-force-majeure" style="border-color:#fca5a5; color:#dc2626; height:30px; font-weight:600;" title="Экстренное снятие инженера со смены при ДТП, травме или форс-мажоре">Снять со смены (Форс-мажор)</button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="gantt-header-ruler">
+            <div class="ruler-spacer">Инженер</div>
+            <div class="ruler-scale">
+              <span class="ruler-hour">09:00</span>
+              <span class="ruler-hour">10:00</span>
+              <span class="ruler-hour">11:00</span>
+              <span class="ruler-hour">12:00</span>
+              <span class="ruler-hour">13:00</span>
+              <span class="ruler-hour">14:00</span>
+              <span class="ruler-hour">15:00</span>
+              <span class="ruler-hour">16:00</span>
+              <span class="ruler-hour">17:00</span>
+              <span class="ruler-hour">18:00</span>
+              <span class="ruler-hour">19:00</span>
+              <span class="ruler-hour">20:00</span>
+              <span class="ruler-hour ruler-hour-last">21:00</span>
+            </div>
+          </div>
+
+          <div class="gantt-container gantt-full-height" id="gantt-chart"></div>
+        </div>
+      </section>
+
+      
+      <section class="view-page" id="view-pgp">
+        <div class="page-container">
+          <div class="view-page-header">
+            <h3>Групповые проблемы узлов доступа (ПГП)</h3>
+            <p>Интеллектуальная агрегация жалоб абонентов на узлах доступа (OLT / коммутаторах). Направление одной станционной бригады вместо индивидуальных выездов экономит более 45 человеко-часов.</p>
+          </div>
+
+          <div class="pgp-container" id="pgp-list">
+            <div class="empty-state">Групповых аварий на узлах доступа не обнаружено.</div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="view-page" id="view-unassigned">
+        <div class="page-container">
+          <div class="view-page-header">
+            <h3>Очередь заявок, запланированных к переносу на следующий день</h3>
+            <p>Физический лимит 8-часовой рабочей смены 40 инженеров составляет около 200 визитов с учетом перерывов и времени в пути. Заявки без риска нарушения нормативных сроков перенесены на следующий рабочий день.</p>
+          </div>
+
+          
+          <div class="unassigned-toolbar">
+            <div class="unassigned-search-group">
+              <input type="text" id="unassigned-search" class="unassigned-input" placeholder="Поиск по ID наряда, адресу или району..." />
+              <select id="unassigned-filter-district" class="unassigned-select">
+                <option value="all">Все районы (5)</option>
+                <option value="SC-01">Уралмаш / Эльмаш (Север)</option>
+                <option value="SC-02">Центр (Ленинский / Кировский)</option>
+                <option value="SC-03">ВИЗ / Заречный (Запад)</option>
+                <option value="SC-04">Пионерский / ЖБИ (Восток)</option>
+                <option value="SC-05">Ботаника / Чкаловский (Юг)</option>
+              </select>
+            </div>
+            <div class="unassigned-actions-group">
+              <button type="button" class="btn btn-primary btn-sm" id="btn-bulk-reschedule-selected" disabled title="Согласовать перенос только отмеченных галочками нарядов">Перенести выбранные (0)</button>
+              <button type="button" class="btn btn-warning btn-sm" id="btn-bulk-reschedule">Согласовать перенос всей очереди (<span id="bulk-next-day-label">след. день</span>)</button>
+              <button type="button" class="btn btn-primary btn-sm" id="btn-add-duty-crew">+ 2 дежурные бригады (сверхурочно)</button>
+            </div>
+          </div>
+
+          <div class="unassigned-table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:36px; text-align:center;"><input type="checkbox" id="unassigned-select-all" title="Выбрать все видимые" style="accent-color:#7700ff; cursor:pointer;"></th>
+                  <th style="width:145px;">ID наряда</th>
+                  <th>Адрес объекта / Район</th>
+                  <th style="width:115px;">Слот</th>
+                  <th style="width:230px;">Статус / Причина переноса</th>
+                  <th style="width:280px; min-width:280px; text-align:center;">Оперативные действия</th>
+                </tr>
+              </thead>
+              <tbody id="unassigned-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="view-page" id="view-kpi">
+        <div class="page-container kpi-page-container">
+          <div class="view-page-header">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+              <div>
+                <h3 style="margin:0 0 6px 0; font-size:18px; font-weight:700; color:#1e293b;">Сводные ключевые показатели эффективности смены (KPI)</h3>
+                <p style="margin:0; color:#64748b; font-size:13px;">Оперативная аналитика выполнения суточного расписания 40 выездных бригад, соблюдения клиентского SLA, дорожного трафика и балансировки нагрузки по г. Екатеринбургу</p>
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn btn-outline btn-sm" id="btn-refresh-kpi-view">Обновить показатели</button>
+                <button type="button" class="btn btn-primary btn-sm" id="btn-export-kpi-xlsx">Экспорт маршрутов (.xlsx)</button>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-export-kpi-summary">Экспорт сводки (CSV)</button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="kpi-dashboard-grid">
+            
+            <div class="kpi-dash-card card-sla">
+              <div class="kpi-dash-card-header">
+                <span class="kpi-dash-tag">Качество сервиса</span>
+                <span class="badge badge-success" id="kpi-badge-sla">Расчёт SLA...</span>
+              </div>
+              <div class="kpi-dash-body">
+                <span class="kpi-dash-label">SLA СМЕНЫ (в срок: <span id="kpi-in-slot-pct">—</span>)</span>
+                <div class="kpi-dash-main-val text-success" id="kpi-sla">—%</div>
+                <div class="kpi-dash-progress-wrap">
+                  <div class="kpi-dash-progress-bar bg-success" id="kpi-dash-bar-sla" style="width: 0%;"></div>
+                </div>
+                <div class="kpi-delta" id="kpi-delta-sla" hidden></div>
+                <div class="kpi-dash-footer-note">Своевременное прибытие в клиентские двухчасовые интервалы</div>
+              </div>
+            </div>
+
+            
+            <div class="kpi-dash-card card-assigned">
+              <div class="kpi-dash-card-header">
+                <span class="kpi-dash-tag">Объем работ</span>
+                <span class="badge badge-primary" id="kpi-badge-assigned">100% лимита смены</span>
+              </div>
+              <div class="kpi-dash-body">
+                <span class="kpi-dash-label">НАРЯДЫ СМЕНЫ</span>
+                <div class="kpi-dash-main-val text-primary" id="kpi-assigned">197 / 360</div>
+                <div class="kpi-dash-progress-wrap">
+                  <div class="kpi-dash-progress-bar bg-primary" id="kpi-dash-bar-assigned" style="width: 55%;"></div>
+                </div>
+                <div class="kpi-dash-footer-note">Распределено: <b id="kpi-assigned-sub">197 нарядов</b> (очередь переноса: <b id="kpi-unassigned-sub">148</b>)</div>
+              </div>
+            </div>
+
+            
+            <div class="kpi-dash-card card-travel">
+              <div class="kpi-dash-card-header">
+                <span class="kpi-dash-tag">Логистика OSRM</span>
+                <span class="badge badge-info" id="kpi-badge-travel">Граф дорог</span>
+              </div>
+              <div class="kpi-dash-body">
+                <span class="kpi-dash-label">ПРОБЕГ (ВРЕМЯ В ПУТИ)</span>
+                <div class="kpi-dash-main-val text-info" id="kpi-travel">1973 мин</div>
+                <div class="kpi-dash-progress-wrap">
+                  <div class="kpi-dash-progress-bar bg-info" id="kpi-dash-bar-travel" style="width: 65%;"></div>
+                </div>
+                <div class="kpi-delta" id="kpi-delta-travel" hidden></div>
+                <div class="kpi-dash-footer-note" id="kpi-travel-note">Суммарно: <b id="kpi-travel-hours">~32.9 ч</b> | В среднем ~49 мин на бригаду</div>
+              </div>
+            </div>
+
+            
+            <div class="kpi-dash-card card-cv">
+              <div class="kpi-dash-card-header">
+                <span class="kpi-dash-tag">Равномерность</span>
+                <span class="badge badge-purple" id="kpi-badge-cv">Отличная (CV &lt; 0.5)</span>
+              </div>
+              <div class="kpi-dash-body">
+                <span class="kpi-dash-label">БАЛАНСИРОВКА CV</span>
+                <div class="kpi-dash-main-val text-purple" id="kpi-cv">0.444</div>
+                <div class="kpi-dash-progress-wrap">
+                  <div class="kpi-dash-progress-bar bg-purple" id="kpi-dash-bar-cv" style="width: 82%;"></div>
+                </div>
+                <div class="kpi-delta" id="kpi-delta-cv" hidden></div>
+                <div class="kpi-dash-footer-note" id="kpi-cv-note">Коэффициент вариации рабочего времени по активным мастерам</div>
+              </div>
+            </div>
+
+            
+            <div class="kpi-dash-card card-pgp">
+              <div class="kpi-dash-card-header">
+                <span class="kpi-dash-tag">Узлы доступа</span>
+                <span class="badge badge-orange" id="kpi-badge-pgp">Экономия —</span>
+              </div>
+              <div class="kpi-dash-body">
+                <span class="kpi-dash-label">АВАРИИ ПГП</span>
+                <div class="kpi-dash-main-val text-orange" id="kpi-pgp">0 нарядов</div>
+                <div class="kpi-dash-progress-wrap">
+                  <div class="kpi-dash-progress-bar bg-orange" id="kpi-dash-bar-pgp" style="width: 0%;"></div>
+                </div>
+                <div class="kpi-dash-footer-note" id="kpi-pgp-note">0 узлов доступа объединены в станционные выезды</div>
+              </div>
+            </div>
+
+            
+            <div class="kpi-dash-card card-risks">
+              <div class="kpi-dash-card-header">
+                <span class="kpi-dash-tag">Мониторинг слотов</span>
+                <span class="badge badge-success" id="kpi-badge-risks">Штатный режим</span>
+              </div>
+              <div class="kpi-dash-body">
+                <span class="kpi-dash-label">ОПЕРАТИВНЫЕ РИСКИ</span>
+                <div class="kpi-dash-main-val text-danger" id="kpi-risks">0</div>
+                <div class="kpi-dash-progress-wrap">
+                  <div class="kpi-dash-progress-bar bg-success" id="kpi-dash-bar-risks" style="width: 100%;"></div>
+                </div>
+                <div class="kpi-dash-footer-note" id="kpi-risks-note">Угрозы срыва согласованных клиентских интервалов отсутствуют</div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="kpi-dashboard-details-grid">
+            
+            <div class="kpi-detail-card">
+              <div class="kpi-detail-card-header">
+                <h4 style="margin:0; font-size:14px; font-weight:700; color:#1e293b;">Срез показателей по 5 Сервисным Центрам (СЦ) Екатеринбурга</h4>
+                <span style="font-size:11px; color:#64748b;">Территориальное разделение бригад</span>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table kpi-sc-table">
+                  <thead>
+                    <tr>
+                      <th>Сервисный центр</th>
+                      <th style="text-align:center;">Бригады</th>
+                      <th style="text-align:center;">Наряды в плане</th>
+                      <th style="text-align:center;">Ср. загрузка</th>
+                      <th style="text-align:center;">Время в пути</th>
+                      <th style="text-align:center;">SLA района</th>
+                    </tr>
+                  </thead>
+                  <tbody id="kpi-sc-table-rows">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            
+            <div class="kpi-detail-card">
+              <div class="kpi-detail-card-header">
+                <h4 id="kpi-time-title" style="margin:0; font-size:14px; font-weight:700; color:#1e293b;">Структура фонда рабочего времени</h4>
+                <span style="font-size:11px; color:#64748b;">Эффективность трудозатрат по остановкам плана</span>
+              </div>
+              <div class="kpi-time-breakdown" id="kpi-time-breakdown">
+                <div class="kpi-time-row">
+                  <div class="kpi-time-label-wrap">
+                    <span class="kpi-time-dot" style="background:#7700ff;"></span>
+                    <span class="kpi-time-name">Выполнение работ у абонентов</span>
+                    <span class="kpi-time-hours" id="kpi-time-work">—</span>
+                  </div>
+                  <div class="kpi-dash-progress-wrap">
+                    <div class="kpi-dash-progress-bar" id="kpi-bar-work" style="background:#7700ff; width:0%;"></div>
+                  </div>
+                </div>
+
+                <div class="kpi-time-row">
+                  <div class="kpi-time-label-wrap">
+                    <span class="kpi-time-dot" style="background:#0284c7;"></span>
+                    <span class="kpi-time-name">Перемещения между адресами</span>
+                    <span class="kpi-time-hours" id="kpi-time-travel">—</span>
+                  </div>
+                  <div class="kpi-dash-progress-wrap">
+                    <div class="kpi-dash-progress-bar" id="kpi-bar-travel" style="background:#0284c7; width:0%;"></div>
+                  </div>
+                </div>
+
+                <div class="kpi-time-row">
+                  <div class="kpi-time-label-wrap">
+                    <span class="kpi-time-dot" style="background:#64748b;"></span>
+                    <span class="kpi-time-name">Обеденные перерывы бригад</span>
+                    <span class="kpi-time-hours" id="kpi-time-break">—</span>
+                  </div>
+                  <div class="kpi-dash-progress-wrap">
+                    <div class="kpi-dash-progress-bar" id="kpi-bar-break" style="background:#64748b; width:0%;"></div>
+                  </div>
+                </div>
+
+                <div class="kpi-time-row">
+                  <div class="kpi-time-label-wrap">
+                    <span class="kpi-time-dot" style="background:#10b981;"></span>
+                    <span class="kpi-time-name">Заезды на склад СЦ за оборудованием (Restock)</span>
+                    <span class="kpi-time-hours" id="kpi-time-restock">—</span>
+                  </div>
+                  <div class="kpi-dash-progress-wrap">
+                    <div class="kpi-dash-progress-bar" id="kpi-bar-restock" style="background:#10b981; width:0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-detail-card kpi-validation-card" id="kpi-validation-card" style="margin-top:16px;">
+            <div class="kpi-detail-card-header">
+              <h4 style="margin:0; font-size:14px; font-weight:700; color:#1e293b;">Оперативный контроль качества плана (H1–H10)</h4>
+              <span style="font-size:11px; color:#64748b;">Проверка жёстких ограничений расписания и изменения визитов «Было — Стало»</span>
+            </div>
+            <div id="dispatcher-plan-changes" class="dispatcher-plan-changes">Загрузка проверки H1–H10...</div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="view-page" id="view-sheet">
+        <div class="page-container">
+          <div class="route-sheet-view-card">
+            <div class="sheet-header-banner">
+              <span class="sheet-org">ПАО «Ростелеком» | Екатеринбургский филиал</span>
+              <h2 id="page-sheet-title">Маршрутный лист выездного инженера</h2>
+              <div class="sheet-progress-wrap" id="page-sheet-progress-wrap"></div>
+              <span class="sheet-meta" id="page-sheet-meta">Загрузка данных маршрута...</span>
+            </div>
+
+            
+            <div class="sheet-grid-layout">
+              
+              <div class="sheet-col-map no-print">
+                <div class="sheet-section sheet-map-card">
+                  <div class="sheet-map-header">
+                    <div class="sheet-map-title-wrap">
+                      <h4 class="sheet-section-title" style="margin:0;">Интерактивный маршрут инженера</h4>
+                      <span class="sheet-map-subtitle">Точки, отмеченные как выполненные, автоматически исключаются из активного трека</span>
+                    </div>
+                    <div class="sheet-map-status-pills">
+                      <span class="sheet-map-pill pill-rem" id="sheet-map-rem-pill">В маршруте: 0 нарядов</span>
+                      <span class="sheet-map-pill pill-done" id="sheet-map-done-pill">Выполнено: 0</span>
+                      <button type="button" class="btn btn-outline btn-sm" id="btn-recenter-engineer-map" style="padding: 3px 8px; font-size: 11px;">Центрировать</button>
+                    </div>
+                  </div>
+                  <div id="engineer-route-map" class="engineer-map-view"></div>
+                </div>
+              </div>
+
+              
+              <div class="sheet-col-info">
+                
+                <div class="sheet-section sheet-next-stop-box no-print" id="sheet-next-stop-container"></div>
+
+                
+                <div class="sheet-section sheet-equipment-box">
+                  <h4 class="sheet-section-title" style="margin-top:0;">Оборудование в автомобиле (склад СЦ)</h4>
+                  <table class="data-table sheet-table compact-eq-table">
+                    <thead>
+                      <tr>
+                        <th>Оборудование</th>
+                        <th style="text-align:center;">Загрузка</th>
+                        <th style="text-align:center;">Расход</th>
+                        <th style="text-align:center;">Остаток</th>
+                      </tr>
+                    </thead>
+                    <tbody id="page-sheet-equipment-rows"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="sheet-section" style="margin-top:16px;">
+              <h4 class="sheet-section-title">Пошаговое расписание выездов и нарядов</h4>
+              <table class="data-table sheet-table">
+                <thead>
+                  <tr>
+                    <th>№</th>
+                    <th>Время</th>
+                    <th>Слот</th>
+                    <th>Наряд</th>
+                    <th>Вид работ</th>
+                    <th>Адрес объекта</th>
+                    <th>Оборудование</th>
+                    <th>Отметка о выполнении</th>
+                  </tr>
+                </thead>
+                <tbody id="page-sheet-stops-rows"></tbody>
+              </table>
+            </div>
+
+            
+            <div class="sheet-signatures">
+              <div class="sig-item">
+                <span>Мастер / Инженер: __________________ / <b id="page-sig-engineer-name">Морозов Роман</b></span>
+              </div>
+              <div class="sig-item">
+                <span>Диспетчер смены: __________________ / <b>Иванова С.В.</b></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="view-page" id="view-split">
+        <div class="split-layout">
+          <div class="split-map-pane">
+            <div class="split-map-toolbar">
+              <div class="split-toolbar-left">
+                <span class="split-map-title">Карта оперативного мониторинга</span>
+                <span class="split-map-badge" id="split-map-status-badge">Все инженеры (обзор)</span>
+              </div>
+              <div class="split-toolbar-right">
+                <label for="split-center-select" style="font-weight:600; color:#475569;">СЦ:</label>
+                <select id="split-center-select" class="split-crew-select">
+                  <option value="all">Все СЦ (5)</option>
+                  <option value="SC-01">СЦ «Север»</option>
+                  <option value="SC-02">СЦ «Центр»</option>
+                  <option value="SC-03">СЦ «Запад»</option>
+                  <option value="SC-04">СЦ «Восток»</option>
+                  <option value="SC-05">СЦ «Юг»</option>
+                </select>
+                <label for="split-crew-select" style="font-weight:600; color:#475569;">Инженер:</label>
+                <select id="split-crew-select" class="split-crew-select">
+                  <option value="all">Все инженеры (обзор смены)</option>
+                </select>
+                <button type="button" class="btn btn-sm btn-outline" id="btn-split-reset-view" title="Сбросить к общему обзору города">Сброс</button>
+              </div>
+            </div>
+            <div id="split-map"></div>
+          </div>
+          <div class="split-side-pane">
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="split-alerts">Оперативные алерты (<span id="split-alerts-cnt">0</span>)</button>
+              <button class="tab-btn" data-tab="split-unassigned">Очередь переноса</button>
+            </div>
+            <div class="tab-content active" id="tab-split-alerts">
+              <div class="alerts-list" id="split-alerts-list">
+                <div class="empty-state">Рисков срыва слотов нет. График смены стабилен.</div>
+              </div>
+            </div>
+            <div class="tab-content" id="tab-split-unassigned">
+              <div class="unassigned-table-container">
+                <table class="data-table split-unassigned-table">
+                  <thead>
+                    <tr>
+                      <th style="width:135px;">Наряд</th>
+                      <th>Адрес объекта</th>
+                      <th style="width:95px; text-align:center;">Слот</th>
+                      <th style="width:145px; text-align:center;">Статус переноса</th>
+                      <th style="width:75px; text-align:center;">Карта</th>
+                    </tr>
+                  </thead>
+                  <tbody id="split-unassigned-rows"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    
+    <aside class="order-inspector" id="order-inspector">
+      <div class="inspector-header">
+        <div>
+          <span class="inspector-subtitle">Карточка наряда</span>
+          <h3 id="insp-order-id">ORD-20261026-0001</h3>
+        </div>
+        <div class="inspector-header-right">
+          <span class="status-badge" id="insp-status-badge">В графике</span>
+          <button class="btn-close-inspector" id="btn-close-inspector" title="Закрыть карточку">&times;</button>
+        </div>
+      </div>
+
+      <div class="inspector-body">
+        
+        <div class="inspector-section">
+          <div class="section-badge-title">Объект и абонент</div>
+          <div class="inspector-grid">
+            <div class="insp-item">
+              <span class="insp-label">Адрес:</span>
+              <span class="insp-value bold" id="insp-address">г. Екатеринбург, ул. Баумана, д. 15, кв. 42</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Район / СЦ:</span>
+              <span class="insp-value" id="insp-district">СЦ «Север» (Уралмаш)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Абонент:</span>
+              <span class="insp-value" id="insp-client">Ковалева Елена Сергеевна</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Телефон:</span>
+              <span class="insp-value" id="insp-phone">+7 (912) 204-11-85</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Тип строения:</span>
+              <span class="insp-value" id="insp-building-type">Многоквартирный дом (МКД)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Узел доступа:</span>
+              <span class="insp-value" id="insp-access-node">AN-0103</span>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="inspector-section">
+          <div class="section-badge-title">Параметры работ и временной слот</div>
+          <div class="inspector-grid">
+            <div class="insp-item">
+              <span class="insp-label">Вид работ:</span>
+              <span class="insp-value bold" id="insp-work-type">Инсталляция PON МКД (90 мин)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Технология:</span>
+              <span class="insp-value" id="insp-tech">PON (GPON)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Согласованный слот:</span>
+              <span class="insp-value bold text-primary" id="insp-slot">11:00 - 13:00</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Расчетное прибытие:</span>
+              <span class="insp-value bold text-success" id="insp-arrival">11:15 (запас: 105 мин)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Допуск на высоту (ВЛС):</span>
+              <span class="insp-value" id="insp-height">Не требуется</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Повторное обращение:</span>
+              <span class="insp-value" id="insp-repeat">Нет (первичное подключение)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Прогноз длительности:</span>
+              <span class="insp-value bold" id="insp-duration-pred">90 мин (норматив)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Формат выезда:</span>
+              <span class="insp-value" id="insp-crew-format">Индивидуальный (1 мастер)</span>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="inspector-section">
+          <div class="section-badge-title">Назначенный специалист</div>
+          <div class="inspector-grid">
+            <div class="insp-item">
+              <span class="insp-label">Инженер:</span>
+              <span class="insp-value bold" id="insp-staff-name">Морозов Роман («Север»)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Табельный номер:</span>
+              <span class="insp-value" id="insp-staff-id">ST-001</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Профиль:</span>
+              <span class="insp-value" id="insp-staff-profile">Инженер инсталляций 1 кат.</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Смена мастера:</span>
+              <span class="insp-value" id="insp-staff-shift">09:00 - 18:00</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Автомобиль:</span>
+              <span class="insp-value" id="insp-staff-vehicle">Lada Largus (А101РТ 96)</span>
+            </div>
+            <div class="insp-item">
+              <span class="insp-label">Стаж работы:</span>
+              <span class="insp-value" id="insp-staff-exp">7.1 лет</span>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="inspector-section">
+          <div class="section-badge-title">Оборудование и материалы</div>
+          <div class="insp-item full-width">
+            <span class="insp-label">Требуемый комплект:</span>
+            <span class="insp-value" id="insp-equipment-req">1x ONT-терминал, 1x Wi-Fi роутер RT-X, оптика Drop</span>
+          </div>
+          <div class="insp-item full-width" style="margin-top:6px;">
+            <span class="insp-label">Наличие в авто мастера:</span>
+            <span class="insp-value text-success" id="insp-equipment-status">В наличии (остаток после визита: 4 ONT, 2 роутера)</span>
+          </div>
+        </div>
+
+        
+        <div class="inspector-section xai-box">
+          <div class="section-badge-title">Обоснование назначения алгоритмом</div>
+          <div id="insp-duration-forecast" style="font-size:11.5px; font-weight:600; color:#5626a3; margin-bottom:6px; display:none;"></div>
+          <p class="xai-text" id="insp-xai-explanation">
+            Инженер закреплён за районом обслуживания. Данные назначения обновляются после расчёта плана смены.
+          </p>
+        </div>
+
+        
+        <div class="inspector-section" id="insp-joint-visit-box" style="display:none; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:10px 12px;">
+          <div class="section-badge-title" style="color:#9a3412;">Совместный выезд экипажа ВЛС (2 мастера по ТБ)</div>
+          <div style="display:grid; grid-template-columns:1fr auto; gap:6px; align-items:center; margin-bottom:6px;">
+            <select id="jv-partner-select" class="form-control" style="font-size:12px;"></select>
+            <input type="time" id="jv-start-time" class="form-control" value="11:00" style="font-size:12px;" />
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-outline btn-sm" id="btn-jv-auto" style="flex:1;">Подобрать пару</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-jv-preview" style="flex:1;">Проверить пару</button>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-jv-confirm" style="flex:1;">Подтвердить ВЛС</button>
+          </div>
+          <div id="jv-preview-result" style="font-size:11.5px; color:#7c2d12; margin-top:6px;"></div>
+        </div>
+
+        
+        <div class="inspector-section actions-box">
+          <div class="section-badge-title">Оперативные действия логиста</div>
+          <div class="reassign-row">
+            <label for="reassign-select" id="reassign-label">Передать инженеру:</label>
+            <div class="reassign-controls">
+              <select id="reassign-select"></select>
+              <button class="btn btn-primary btn-sm" id="btn-do-reassign">Передать</button>
+            </div>
+            
+            <div id="reassign-validation-card" class="reassign-check-box" style="display:none;"></div>
+          </div>
+          <div class="action-buttons-row">
+            <button class="btn btn-warning btn-sm" id="btn-add-delay" title="Зафиксировать непредвиденную задержку">Задержка на адресе (+30 мин)</button>
+            <button class="btn btn-danger btn-sm" id="btn-cancel-visit" title="Отменить визит по просьбе абонента">Отменить визит</button>
+          </div>
+          <div class="action-buttons-row" id="insp-call-actions" style="margin-top:6px; display:none; flex-wrap:wrap;">
+            <button type="button" class="btn btn-outline btn-sm" id="btn-insp-call" style="flex:1; min-width:110px;" title="Отметка контрольного звонка (в окне 30-60 мин до слота)">Отметить звонок</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-insp-demo-call" style="flex:1; min-width:100px;" title="Зафиксировать демо-звонок вне временного окна">Демозвонок</button>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-insp-no-answer" style="flex:1; min-width:130px; color:#b45309; border-color:#fcd34d;" title="Отложить визит при недозвоне клиенту">Клиент не отвечает</button>
+          </div>
+          <div id="insp-sms-draft-wrap" style="margin-top:8px; display:none;">
+            <button type="button" class="btn btn-outline btn-sm" id="btn-insp-sms-draft" style="width:100%;">Сформировать SMS-уведомление абоненту</button>
+            <textarea id="insp-sms-draft-text" readonly rows="3" style="width:100%; margin-top:6px; font-size:11.5px; padding:6px; border:1px solid #cbd5e1; border-radius:6px; display:none; background:#f8fafc;"></textarea>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-copy-sms-draft" style="width:100%; margin-top:6px; display:none;">Скопировать текст SMS</button>
+          </div>
+          <button class="btn btn-outline btn-sm" id="btn-insp-route-sheet" style="width:100%; margin-top:8px;" title="Открыть полный маршрутный лист этого инженера">Маршрутный лист инженера</button>
+          <button type="button" class="btn btn-outline btn-sm" id="btn-insp-complete-restock" style="width:100%; margin-top:6px; display:none; border-color:#10b981; color:#047857;" title="Отметить текущий заезд на склад СЦ завершенным">Завершить заезд в СЦ</button>
+          <button class="btn btn-success btn-sm" id="btn-insp-toggle-complete" style="width:100%; margin-top:6px;" title="Отметить наряд как выполненный или вернуть в работу">Отметить как выполненный</button>
+          <button class="btn btn-outline btn-sm" id="btn-insp-remove-staff" style="width:100%; margin-top:6px; border-color:#fca5a5; color:#dc2626;" title="Экстренное снятие назначенного мастера со смены из-за аварии, травмы или форс-мажора">Снять мастера со смены (Форс-мажор)</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  
+  <div class="modal-overlay" id="modal-add-order">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Добавить наряд вручную</h3>
+        <button class="modal-close" id="btn-close-add">&times;</button>
+      </div>
+
+      
+      <div class="presets-row">
+        <span class="presets-label">Быстрый шаблон:</span>
+        <button type="button" class="btn-preset" data-preset="uralmash-pon">Уралмаш (PON)</button>
+        <button type="button" class="btn-preset" data-preset="center-fttb">Центр (FTTB)</button>
+        <button type="button" class="btn-preset" data-preset="viz-repair">ВИЗ (Ремонт)</button>
+      </div>
+
+      <form id="form-add-order">
+        <div class="form-group">
+          <label>ID наряда:</label>
+          <input type="text" id="add-ord-id" value="ORD-NEW-01" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Тип работы:</label>
+            <select id="add-work-type">
+              <option value="INST_PON_MKD">Инсталляция PON МКД (90 мин)</option>
+              <option value="REPAIR">Устранение неисправности (60 мин)</option>
+              <option value="INST_FTTB_MKD">Инсталляция FTTB МКД (60 мин)</option>
+              <option value="ADD_SERVICE">Доподключение услуги (40 мин)</option>
+              <option value="INST_PON_PRIVATE_VLS">Инсталляция ВЛС (180 мин, высота)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Технология:</label>
+            <select id="add-tech">
+              <option value="PON">PON (GPON)</option>
+              <option value="FTTB">FTTB</option>
+              <option value="XDSL">XDSL</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Район Екатеринбурга:</label>
+            <select id="add-district">
+              <option value="SC-01">Уралмаш (Север)</option>
+              <option value="SC-02">Центр (Ленинский)</option>
+              <option value="SC-03">ВИЗ (Запад)</option>
+              <option value="SC-04">Пионерский (Восток)</option>
+              <option value="SC-05">Ботаника (Юг)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Временной слот:</label>
+            <select id="add-slot">
+              <option value="09:00-11:00">09:00 - 11:00</option>
+              <option value="11:00-13:00">11:00 - 13:00</option>
+              <option value="13:00-15:00">13:00 - 15:00</option>
+              <option value="15:00-17:00">15:00 - 17:00</option>
+              <option value="17:00-19:00">17:00 - 19:00</option>
+              <option value="19:00-21:00">19:00 - 21:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Адрес объекта:</label>
+          <input type="text" id="add-address" value="г. Екатеринбург, ул. Баумана, д. 15" required>
+          <div class="map-pick-row">
+            <span id="add-coords-badge" class="map-coords-badge">Координаты: авто по району</span>
+            <div style="display:flex; gap:6px; flex-shrink:0;">
+              <button type="button" class="btn btn-outline btn-sm" id="btn-pick-map-address" style="padding:3px 9px; font-size:11px;">Указать на карте</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-map-coords" style="padding:3px 9px; font-size:11px; display:none;">Сбросить</button>
+            </div>
+          </div>
+          <input type="hidden" id="add-lat">
+          <input type="hidden" id="add-lon">
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>ФИО абонента:</label>
+            <input type="text" id="add-client" value="Смирнов А.В.">
+          </div>
+          <div class="form-group">
+            <label>Телефон:</label>
+            <input type="text" id="add-phone" value="+7 (922) 111-22-33">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Назначение инженеру:</label>
+          <select id="add-engineer-select">
+            <option value="auto">Автоматический умный подбор (рекомендуется)</option>
+          </select>
+          <div id="add-engineer-warning" style="display:none; margin-top:4px; font-size:11px; color:#b91c1c; font-weight:600;"></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="btn-submit-add">Назначить наряд (в 1 клик)</button>
+          <button type="button" class="btn btn-secondary" id="btn-cancel-add">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="modal-traffic">
+    <div class="modal-card modal-card-traffic">
+      <div class="modal-header">
+        <h3>Модель дорожной загруженности и граф OSRM</h3>
+        <button class="modal-close" id="btn-close-traffic">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:12px;">
+          <div style="font-weight:700; color:#1e293b; margin-bottom:3px; font-size:12.5px;">Дорожный граф: Локальный OSRM (OpenStreetMap)</div>
+          <div style="color:#64748b; font-size:11.5px; line-height:1.45;">
+            Маршрутизация выездных бригад выполняется по реальному дорожному графу (улицы, перекрестки, скоростные лимиты). 
+            Нулевая стоимость API, работа в закрытом контуре (On-premise), без ограничений на число запросов к внешним сервисам.
+          </div>
+        </div>
+
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; padding:10px 14px; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:8px;">
+          <div>
+            <span style="font-weight:700; color:#0f172a; font-size:12.5px;">Учет загруженности дорог по часам суток</span>
+            <div style="font-size:11px; color:#64748b; margin-top:2px;">Применение повышающих коэффициентов к базовому времени в пути OSRM</div>
+          </div>
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; user-select:none; white-space:nowrap;">
+            <input type="checkbox" id="chk-traffic-master" style="width:16px; height:16px; accent-color:#7700ff; cursor:pointer;">
+            <span style="font-weight:700; font-size:12px; color:#94a3b8;" id="traffic-master-status">Отключено (TravelMatrix)</span>
+          </label>
+        </div>
+
+        
+        <div style="margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span style="font-weight:700; color:#1e293b; font-size:12.5px;">Почасовые коэффициенты загруженности:</span>
+              <div style="font-size:11px; color:#64748b; margin-top:1px;">Кликните на карточку часа для включения или снятия коэффициента</div>
+            </div>
+            <div style="display:flex; gap:6px; flex-shrink:0; flex-wrap:wrap;">
+              <button type="button" class="btn btn-sm btn-outline" id="btn-traffic-preset-morning" style="padding:4px 9px; font-size:11px; white-space:nowrap;">Утро 08–10</button>
+              <button type="button" class="btn btn-sm btn-outline" id="btn-traffic-preset-evening" style="padding:4px 9px; font-size:11px; white-space:nowrap;">Вечер 18–20</button>
+              <button type="button" class="btn btn-sm btn-outline" id="btn-traffic-preset-jam" style="padding:4px 9px; font-size:11px; white-space:nowrap; border-color:#f97316; color:#c2410c;">Затор (пик+мосты)</button>
+              <button type="button" class="btn btn-sm btn-outline" id="btn-traffic-enable-all" style="padding:4px 10px; font-size:11px; white-space:nowrap;">Включить все</button>
+              <button type="button" class="btn btn-sm btn-outline" id="btn-traffic-disable-all" style="padding:4px 10px; font-size:11px; white-space:nowrap;">Снять все (x1.0)</button>
+              <button type="button" class="btn btn-sm btn-secondary" id="btn-traffic-reset-default" style="padding:4px 10px; font-size:11px; white-space:nowrap;">Сброс</button>
+            </div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;" id="traffic-hours-chips">
+            
+          </div>
+        </div>
+
+        
+        <div style="background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:12px; margin-bottom:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="font-weight:700; color:#9a3412; font-size:12.5px;">Мосты через р. Исеть (опциональное моделирование):</span>
+            <label style="display:flex; align-items:center; gap:6px; cursor:pointer; user-select:none; white-space:nowrap;">
+              <input type="checkbox" id="chk-bridge-penalty" style="width:16px; height:16px; accent-color:#ea580c; cursor:pointer;">
+              <span style="font-weight:700; color:#9a3412; font-size:12px;">Штраф за мосты в часы пик (+25%)</span>
+            </label>
+          </div>
+          <div style="color:#7c2d12; margin-top:6px; font-size:11.5px; line-height:1.45;">
+            По умолчанию используется точная матрица времени в пути организаторов (TravelMatrix) без добавочных штрафов. При необходимости можно вручную включить пересчёт мостов через Исеть.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span style="font-size:12px; color:#64748b; font-weight:500;" id="traffic-summary-stat">Матрица организаторов (TravelMatrix) | Мосты: отключены</span>
+        <div style="display:flex; gap:8px; align-items:center; flex-shrink:0;">
+          <button type="button" class="btn btn-secondary" id="btn-close-traffic-footer" style="padding:7px 16px; font-size:12px; white-space:nowrap;">Закрыть</button>
+          <button type="button" class="btn btn-primary" id="btn-apply-traffic-replan" style="padding:7px 18px; font-size:12px; font-weight:600; white-space:nowrap;" title="Сохранить коэффициенты и мгновенно пересчитать график смены">Применить и пересчитать смену</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="modal-scenario">
+    <div class="modal-card modal-card-scenario">
+      <div class="modal-header">
+        <div>
+          <h3 style="margin:0; font-size:16px;">Сценарный анализ смены (What-If)</h3>
+          <div style="font-size:11.5px; color:#64748b; margin-top:2px;">Моделирование кадровых изменений и оптимизации запасов оборудования по разделу 5 ТЗ</div>
+        </div>
+        <button class="modal-close" id="btn-close-scenario">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:14px;">
+          <div style="font-weight:700; color:#1e293b; font-size:12.5px; margin-bottom:3px;">Стратегическое моделирование устойчивости расписания</div>
+          <div style="color:#64748b; font-size:11.5px; line-height:1.45;">
+            Выберите моделируемый сценарий смены. Оптимизационный движок проведет полный пересчет назначения нарядов, тайм-слотов и маршрутов с учетом ограничений.
+          </div>
+        </div>
+
+        
+        <div class="scenario-cards-grid">
+          <div class="scenario-card active" data-scenario="staff_minus_3" id="card-scen-staff-minus-3">
+            <div class="scen-card-badge text-danger">Кадровый дефицит</div>
+            <div class="scen-card-title">Невыход 3 инженеров (-3 мастера)</div>
+            <div class="scen-card-desc">Оценка устойчивости плана смены при внезапном невыходе мастеров (болезнь / сход с линии). Исключаются 3 специалиста.</div>
+          </div>
+          <div class="scenario-card" data-scenario="backpack_opt" id="card-scen-backpack-opt">
+            <div class="scen-card-badge text-primary">Складская логистика</div>
+            <div class="scen-card-title">Оптимизация рюкзака АО (+3 роутера / ONT)</div>
+            <div class="scen-card-desc">Какой запас абонентского оборудования нужен в автомобиле мастера, чтобы полностью исключить дневные заезды в сервисный центр.</div>
+          </div>
+          <div class="scenario-card" data-scenario="duty_plus_2" id="card-scen-duty-plus-2">
+            <div class="scen-card-badge text-purple">Усиление смены</div>
+            <div class="scen-card-title">Дежурные инженеры (+2 сверхурочно)</div>
+            <div class="scen-card-desc">Вывод 2 дополнительных дежурных специалистов в вечерние часы пик для отработки заявок из очереди переноса.</div>
+          </div>
+          <div class="scenario-card" data-scenario="duration_history" id="card-scen-duration-history">
+            <div class="scen-card-badge text-info">Медианная статистика</div>
+            <div class="scen-card-title">Прогноз длительности (История работ)</div>
+            <div class="scen-card-desc">Оценка расписания по фактической медиане длительности выполненных работ (<code>duration-history</code>).</div>
+          </div>
+        </div>
+
+        
+        <div id="scenario-custom-staff-box" style="margin-bottom:12px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:6px;">
+            <span style="font-size:12px; font-weight:700; color:#1e293b;">Выбор до 3 мастеров для моделирования невыхода (необязательно):</span>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-run-custom-minus3" style="padding:3px 10px; font-size:11px;">Пересчитать выбор</button>
+          </div>
+          <div id="scenario-custom-staff-picker" style="display:flex; flex-wrap:wrap; gap:6px; max-height:92px; overflow-y:auto;"></div>
+          <div id="scenario-duration-stats" style="display:none; font-size:12px; color:#334155; margin-top:6px;"></div>
+        </div>
+
+        
+        <div style="margin-top:14px; margin-bottom:12px;">
+          <div style="font-weight:700; color:#0f172a; font-size:12.5px; margin-bottom:8px;">Сравнение ключевых метрик (План vs Сценарий):</div>
+          <table class="scenario-compare-table">
+            <thead>
+              <tr>
+                <th>Метрика эффективности</th>
+                <th>Базовый план</th>
+                <th>Результат сценария</th>
+                <th>Динамика (Delta)</th>
+              </tr>
+            </thead>
+            <tbody id="scenario-compare-tbody">
+              
+            </tbody>
+          </table>
+        </div>
+
+        
+        <div class="scenario-insight-box" id="scenario-insight-box">
+          <div class="insight-label">Аналитическое заключение системы:</div>
+          <div class="insight-text" id="scenario-insight-text">Загрузка данных сценария...</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span style="font-size:12px; color:#64748b; font-weight:500;" id="scenario-summary-stat">Сценарий: Невыход 3 инженеров</span>
+        <div style="display:flex; gap:8px; align-items:center; flex-shrink:0;">
+          <button type="button" class="btn btn-secondary" id="btn-close-scenario-footer" style="padding:7px 16px; font-size:12px; white-space:nowrap;">Закрыть</button>
+          <button type="button" class="btn btn-primary" id="btn-apply-scenario-shift" style="padding:7px 18px; font-size:12px; font-weight:600; white-space:nowrap;" title="Применить результаты выбранного сценария к рабочей смене">Применить сценарий к смене</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="modal-upload">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Загрузка внешнего файла DayInput (JSON)</h3>
+        <button class="modal-close" id="btn-close-upload">&times;</button>
+      </div>
+      <div class="upload-dropzone" id="dropzone">
+        <p>Перетащите файл DayInput.json сюда или выберите на диске</p>
+        <input type="file" id="file-input" accept=".json">
+      </div>
+      <div class="form-actions" style="margin-top:16px;">
+        <button type="button" class="btn btn-secondary" id="btn-cancel-upload">Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="modal-force-majeure">
+    <div class="modal-card" style="max-width:540px;">
+      <div class="modal-header">
+        <div>
+          <h3 style="color:#b91c1c; margin:0 0 3px 0;">Снятие инженера со смены (Форс-мажор)</h3>
+          <span style="font-size:12px; color:#64748b;">Экстренное реагирование на ДТП, производственные травмы и сход с маршрута</span>
+        </div>
+        <button class="modal-close" id="btn-close-force-majeure">&times;</button>
+      </div>
+
+      <form id="form-force-majeure" style="padding:16px 20px;">
+        <div class="form-group" style="margin-bottom:14px;">
+          <label style="font-size:12px; font-weight:700; color:#334155; margin-bottom:5px; display:block;">Инженер, снимаемый со смены:</label>
+          <select id="fm-staff-select" class="form-control" style="width:100%; font-size:13px;" required></select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label style="font-size:12px; font-weight:700; color:#334155; margin-bottom:5px; display:block;">Причина снятия (Форс-мажорное обстоятельство):</label>
+          <select id="fm-reason-select" class="form-control" style="width:100%; font-size:13px;" required>
+            <option value="ДТП со служебным автомобилем">ДТП со служебным автомобилем (авария на маршруте, вызов ГИБДД)</option>
+            <option value="Производственная или бытовая травма">Производственная или бытовая травма (госпитализация мастера)</option>
+            <option value="Внезапное ухудшение самочувствия">Внезапное ухудшение самочувствия (острое заболевание)</option>
+            <option value="Критическая поломка автомобиля">Критическая поломка автомобиля (требуется эвакуация в автосервис)</option>
+            <option value="Выход из строя ключевого оборудования">Выход из строя ключевого оборудования (сварочник ВОЛС / рефлектометр)</option>
+            <option value="Экстренные семейные обстоятельства">Экстренные семейные обстоятельства специалиста</option>
+            <option value="Другая непредвиденная причина">Другая непредвиденная причина (форс-мажор)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label style="font-size:12px; font-weight:700; color:#334155; margin-bottom:5px; display:block;">Детали инцидента (комментарий):</label>
+          <input type="text" id="fm-comment" class="form-control" placeholder="Например: ул. Челюскинцев, касательное столкновение, авто не на ходу" style="width:100%; font-size:12.5px;">
+        </div>
+
+        <div class="form-group" style="margin-bottom:16px;">
+          <label style="font-size:12px; font-weight:700; color:#334155; margin-bottom:6px; display:block;">Стратегия распределения оставшихся нарядов:</label>
+          <div class="fm-strategy-list">
+            <label class="fm-strategy-item">
+              <input type="radio" name="fm-reassign-strategy" value="auto" checked>
+              <div class="fm-strategy-text">
+                <span class="fm-strategy-title">(Рекомендуется) Автоматически распределить</span>
+                <span class="fm-strategy-desc">Оставшиеся наряды распределяются между свободными бригадами того же СЦ</span>
+              </div>
+            </label>
+            <label class="fm-strategy-item">
+              <input type="radio" name="fm-reassign-strategy" value="reschedule_tomorrow">
+              <div class="fm-strategy-text">
+                <span class="fm-strategy-title">Согласовать перенос на следующий рабочий день (<span id="fm-next-day-label">след. день</span>)</span>
+                <span class="fm-strategy-desc">Перевод в очередь подтвержденных выездов следующего дня</span>
+              </div>
+            </label>
+            <label class="fm-strategy-item">
+              <input type="radio" name="fm-reassign-strategy" value="backlog">
+              <div class="fm-strategy-text">
+                <span class="fm-strategy-title">Направить в оперативную очередь</span>
+                <span class="fm-strategy-desc">Оставить в списке нераспределенных нарядов для ручного переназначения</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div style="background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:10px 12px; font-size:12px; color:#991b1b; line-height:1.45; margin-bottom:16px;">
+          <b>Внимание:</b> При фиксации форс-мажора статус сотрудника переводится в «Недоступен». Выполненные наряды сохраняются в путевом листе. Система мгновенно оптимизирует маршруты соседних инженеров без нарушения двухчасовых клиентских слотов.
+        </div>
+
+        <div class="form-actions" style="display:flex; justify-content:flex-end; gap:8px;">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-force-majeure">Отмена</button>
+          <button type="submit" class="btn btn-danger" id="btn-submit-force-majeure" style="background:#dc2626; border-color:#b91c1c; color:#ffffff; font-weight:600;">Подтвердить снятие со смены</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="modal-confirm-action">
+    <div class="modal-card modal-confirm-card">
+      <div class="modal-header">
+        <h3 id="modal-confirm-title">Подтверждение действия</h3>
+        <button class="modal-close" id="btn-confirm-close">&times;</button>
+      </div>
+      <div class="modal-confirm-body" id="modal-confirm-msg">
+        Вы действительно хотите подтвердить выполнение этой операции?
+      </div>
+      <div class="modal-confirm-actions">
+        <button type="button" class="btn btn-secondary" id="btn-confirm-cancel">Отмена</button>
+        <button type="button" class="btn btn-primary" id="btn-confirm-ok">Подтвердить</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="toast-container" id="toast-container"></div>
+
+  
+  <script src="/vendor/leaflet/leaflet.js"></script>
+  <script src="/js/constants.js?v=4.5"></script>
+  <script src="/js/app.js?v=4.5"></script>
+</body>
+</html>

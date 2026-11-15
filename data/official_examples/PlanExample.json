@@ -1,0 +1,189 @@
+{
+  "date": "2026-10-26",
+  "plan_version": 1,
+  "based_on_event_id": null,
+  "as_of": "2026-10-26T08:30:00+05:00",
+  "computation_ms": 41250,
+  "routes": [
+    {
+      "staff_id": "ST-001",
+      "service_center_id": "SC-01",
+      "status": "ACTIVE",
+      "unavailable_from": null,
+      "unavailable_until": null,
+      "stops": [
+        {
+          "seq": 1,
+          "type": "DEPOT_START",
+          "location_id": "SC-01",
+          "order_id": null,
+          "arrival": "2026-10-26T09:00:00+05:00",
+          "start": "2026-10-26T09:00:00+05:00",
+          "end": "2026-10-26T09:00:00+05:00",
+          "travel_sec": 0,
+          "status": "PLANNED",
+          "equipment_after": {
+            "ONT": 3,
+            "ROUTER": 4,
+            "STB": 2
+          }
+        },
+        {
+          "seq": 2,
+          "type": "VISIT",
+          "location_id": "B-00412",
+          "order_id": "ORD-20261026-0001",
+          "arrival": "2026-10-26T09:18:00+05:00",
+          "start": "2026-10-26T09:18:00+05:00",
+          "end": "2026-10-26T10:18:00+05:00",
+          "travel_sec": 1080,
+          "distance_m": 4620,
+          "status": "PLANNED",
+          "equipment_after": {
+            "ONT": 2,
+            "ROUTER": 4,
+            "STB": 2
+          },
+          "explanation": "Ближайший сотрудник 3ЛТП с PON; запас до конца слота 102 мин"
+        },
+        {
+          "seq": 3,
+          "type": "VISIT",
+          "location_id": "B-00415",
+          "order_id": "ORD-20261026-0007",
+          "arrival": "2026-10-26T10:22:00+05:00",
+          "start": "2026-10-26T11:00:00+05:00",
+          "end": "2026-10-26T11:45:00+05:00",
+          "travel_sec": 240,
+          "distance_m": 780,
+          "status": "PLANNED",
+          "equipment_after": {
+            "ONT": 2,
+            "ROUTER": 3,
+            "STB": 2
+          }
+        },
+        {
+          "seq": 4,
+          "type": "BREAK",
+          "location_id": "B-00415",
+          "order_id": null,
+          "arrival": "2026-10-26T11:45:00+05:00",
+          "start": "2026-10-26T12:00:00+05:00",
+          "end": "2026-10-26T13:00:00+05:00",
+          "travel_sec": 0,
+          "status": "PLANNED"
+        },
+        {
+          "seq": 5,
+          "type": "RESTOCK",
+          "location_id": "SC-01",
+          "order_id": null,
+          "arrival": "2026-10-26T13:20:30+05:00",
+          "start": "2026-10-26T13:20:30+05:00",
+          "end": "2026-10-26T13:35:30+05:00",
+          "travel_sec": 1230,
+          "distance_m": 5150,
+          "status": "PLANNED",
+          "equipment_after": {
+            "ONT": 6,
+            "ROUTER": 6,
+            "STB": 4
+          }
+        },
+        {
+          "seq": 6,
+          "type": "VISIT",
+          "location_id": "B-00412",
+          "order_id": "ORD-20261026-0019",
+          "arrival": "2026-10-26T13:53:30+05:00",
+          "start": "2026-10-26T13:53:30+05:00",
+          "end": "2026-10-26T14:53:30+05:00",
+          "travel_sec": 1080,
+          "distance_m": 4620,
+          "status": "PLANNED",
+          "equipment_after": {
+            "ONT": 5,
+            "ROUTER": 5,
+            "STB": 4
+          }
+        },
+        {
+          "seq": 7,
+          "type": "DEPOT_END",
+          "location_id": "SC-01",
+          "order_id": null,
+          "arrival": "2026-10-26T15:12:00+05:00",
+          "start": "2026-10-26T15:12:00+05:00",
+          "end": "2026-10-26T15:12:00+05:00",
+          "travel_sec": 1110,
+          "distance_m": 4700,
+          "status": "PLANNED"
+        }
+      ],
+      "totals": {
+        "visits": 3,
+        "travel_sec": 4740,
+        "distance_m": 19870,
+        "work_min": 165,
+        "utilization": 0.508
+      }
+    }
+  ],
+  "unassigned": [
+    {
+      "order_id": "ORD-20261026-0233",
+      "reason_code": "NO_QUALIFIED_STAFF",
+      "reason_text": "На смене нет свободного сотрудника с допуском к работам на высоте и технологией PON",
+      "suggested_action": "RESCHEDULE",
+      "proposed_slot": {
+        "start": "2026-10-27T09:00:00+05:00",
+        "end": "2026-10-27T11:00:00+05:00"
+      },
+      "since": "2026-10-26T08:30:00+05:00"
+    }
+  ],
+  "pgp_groups": [
+    {
+      "group_id": "PGP-20261026-01",
+      "access_node_id": "AN-0057",
+      "order_ids": [
+        "ORD-20261026-0390",
+        "ORD-20261026-0391",
+        "ORD-20261026-0393"
+      ],
+      "detected_at": "2026-10-26T08:30:00+05:00",
+      "action": "TRANSFER_TO_STATION",
+      "comment": "3 обращения с OLT Втузгородок-1 за 35 минут"
+    }
+  ],
+  "cancelled": [],
+  "alerts": [
+    {
+      "alert_id": "ALR-20261026-0001",
+      "created_at": "2026-10-26T08:30:00+05:00",
+      "type": "PGP_DETECTED",
+      "status": "ACTIVE",
+      "resolved_at": null,
+      "order_id": null,
+      "group_id": "PGP-20261026-01",
+      "staff_id": null,
+      "forecast_start": null,
+      "lateness_min": null,
+      "suggested_action": "TRANSFER_TO_STATION",
+      "suggested_staff_id": null,
+      "proposed_slot": null,
+      "applied": true,
+      "message": "ПГП на AN-0057, 3 наряда переданы в станционное подразделение"
+    }
+  ],
+  "summary": {
+    "orders_total": 384,
+    "visits_planned": 351,
+    "unassigned": 21,
+    "pgp_orders": 12,
+    "cancelled": 0,
+    "travel_sec_total": 512340,
+    "utilization_cv": 0.14
+  }
+}

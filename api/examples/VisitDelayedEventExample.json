@@ -1,0 +1,8 @@
+{
+  "event_id": "EV-20261026-0004",
+  "type": "VISIT_DELAYED",
+  "timestamp": "2026-10-26T09:50:00+05:00",
+  "staff_id": "ST-001",
+  "order_id": "ORD-20261026-0001",
+  "expected_end": "2026-10-26T10:45:00+05:00"
+}

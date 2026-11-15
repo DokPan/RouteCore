@@ -1,0 +1,7 @@
+{
+  "event_id": "EV-20261026-0021",
+  "type": "ORDER_CANCELLED",
+  "timestamp": "2026-10-26T12:15:00+05:00",
+  "order_id": "ORD-20261026-0145",
+  "reason": "NOT_CONFIRMED"
+}

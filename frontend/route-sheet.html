@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Маршрутный лист</title>
+<link rel="stylesheet" href="/styles/dispatch/print.css">
+<main>
+  <h1>Маршрутный лист</h1>
+  <nav>
+    <a id="sheet-back" href="/">Назад</a>
+    <label for="sheet-staff">Мастер</label>
+    <select id="sheet-staff"></select>
+    <button id="sheet-print" disabled>Печать</button>
+    <a id="sheet-export" hidden>Скачать CSV</a>
+    <a id="sheet-excel" download="route.xlsx" hidden>Скачать Excel (.xlsx)</a>
+    <a href="/api/v1/export/routes.xlsx" download="routes.xlsx">Все маршруты (.xlsx)</a>
+  </nav>
+  <p id="sheet-status" role="status"></p>
+  <div id="sheet-content"></div>
+</main>
+<script type="module" src="/js/route-sheet.js"></script>
+</html>
